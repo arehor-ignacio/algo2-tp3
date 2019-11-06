@@ -1,0 +1,6 @@
+id_linea,nombre_linea
+1,Belgrano Sur
+2,Mitre
+3,Roca
+4,San Martín
+5,Sarmiento

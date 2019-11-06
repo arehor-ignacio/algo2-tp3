@@ -1,0 +1,11 @@
+id,mes,linea,estacion,cantidad
+62,12/2018,mitre,San Isidro,267353
+245,11/2018,mitre,San Isidro,296071
+428,10/2018,mitre,San Isidro,337456
+612,09/2018,mitre,San Isidro,289829
+800,08/2018,mitre,San Isidro,331755
+134,12/2018,roca,Temperley,237125
+319,11/2018,roca,Temperley,285294
+499,10/2018,roca,Temperley,320104
+683,09/2018,roca,Temperley,285344
+873,08/2018,roca,Temperley,318930

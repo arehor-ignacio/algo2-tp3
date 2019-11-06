@@ -1,0 +1,372 @@
+id,mes,linea,estacion,cantidad
+72,12/2018,roca,A. De Elia,12
+73,12/2018,roca,A. Petion,4808
+74,12/2018,roca,A.korn,192618
+75,12/2018,roca,Adrogue,291166
+76,12/2018,roca,Ardigo,134124
+77,12/2018,roca,Banfield,501573
+78,12/2018,roca,Berazategui,205276
+79,12/2018,roca,Bernal,111737
+80,12/2018,roca,Bosques,103979
+81,12/2018,roca,Brandsen,137
+82,12/2018,roca,Brian,2
+83,12/2018,roca,Burzaco,447091
+84,12/2018,roca,Calzada,144693
+85,12/2018,roca,Canuelas,25908
+86,12/2018,roca,Chascomus,121
+87,12/2018,roca,City Bell,40333
+88,12/2018,roca,Claypole,221629
+89,12/2018,roca,Constitucion,3958497
+90,12/2018,roca,Dario Y Maxi,219828
+91,12/2018,roca,Don Bosco,46084
+92,12/2018,roca,El Jaguel,176919
+93,12/2018,roca,Escalada,119281
+94,12/2018,roca,Ezeiza,436366
+95,12/2018,roca,Ezpeleta,159641
+96,12/2018,roca,F. Varela,309044
+97,12/2018,roca,Gerli,143373
+98,12/2018,roca,Glew,558439
+99,12/2018,roca,Gonnet,18350
+100,12/2018,roca,Guernica,131566
+101,12/2018,roca,Gutierrez,5508
+102,12/2018,roca,H. Espanol,12
+103,12/2018,roca,Haedo,2214
+104,12/2018,roca,Hudson,57843
+105,12/2018,roca,J. Marmol,52627
+106,12/2018,roca,Juan XXIII,1
+107,12/2018,roca,Kloosterman,103
+108,12/2018,roca,Km. 33,5
+109,12/2018,roca,Km. 34,11
+110,12/2018,roca,L. De Zamora,1007243
+111,12/2018,roca,L. Guillon,120379
+112,12/2018,roca,La Noria,2
+113,12/2018,roca,La Plata,229855
+114,12/2018,roca,Lanus,814018
+115,12/2018,roca,Levene,57
+116,12/2018,roca,Llavallol,83439
+117,12/2018,roca,Longchamps,394560
+118,12/2018,roca,Maximo Paz,9414
+119,12/2018,roca,Monte,1
+120,12/2018,roca,Monte Grande,509488
+121,12/2018,roca,Pereyra,1986
+122,12/2018,roca,Platanos,42465
+123,12/2018,roca,Policlinico,1
+124,12/2018,roca,Quilmes,368441
+125,12/2018,roca,Ranelagh,30231
+126,12/2018,roca,Ringuelet,7757
+127,12/2018,roca,San Justo,279
+128,12/2018,roca,Santa Sofia,11361
+129,12/2018,roca,Sarandi,44129
+130,12/2018,roca,Sourigues,33070
+131,12/2018,roca,Spegazzini,12350
+132,12/2018,roca,Sta. Catalina,1
+133,12/2018,roca,Tablada,277
+134,12/2018,roca,Temperley,237125
+135,12/2018,roca,Tolosa,15017
+136,12/2018,roca,Tristan Suarez,21709
+137,12/2018,roca,Turdera,91303
+138,12/2018,roca,U. Ferroviaria,1905
+139,12/2018,roca,V. Casares,58
+140,12/2018,roca,V. Dominico,32465
+141,12/2018,roca,Villa Elisa,34723
+142,12/2018,roca,Villa Espana,35418
+143,12/2018,roca,Wilde,58112
+144,12/2018,roca,Yrigoyen,80989
+145,12/2018,roca,Zeballos,95396
+255,11/2018,roca,A. De Elia,3
+256,11/2018,roca,A. Petion,5927
+257,11/2018,roca,A.korn,208114
+258,11/2018,roca,Adrogue,318368
+259,11/2018,roca,Altamirano,1
+260,11/2018,roca,Ardigo,131934
+261,11/2018,roca,Banfield,570957
+262,11/2018,roca,Berazategui,255501
+263,11/2018,roca,Bernal,142304
+264,11/2018,roca,Bosques,105934
+265,11/2018,roca,Brandsen,140
+266,11/2018,roca,Brian,1
+267,11/2018,roca,Burzaco,514206
+268,11/2018,roca,Calzada,154286
+269,11/2018,roca,Canuelas,27529
+270,11/2018,roca,Chascomus,237
+271,11/2018,roca,City Bell,43745
+272,11/2018,roca,Claypole,271229
+273,11/2018,roca,Constitucion,4192582
+274,11/2018,roca,Dario Y Maxi,276339
+275,11/2018,roca,Don Bosco,58967
+276,11/2018,roca,El Jaguel,200200
+277,11/2018,roca,Escalada,143320
+278,11/2018,roca,Ezeiza,381684
+279,11/2018,roca,Ezpeleta,200545
+280,11/2018,roca,F. Varela,281153
+281,11/2018,roca,Gerli,158475
+282,11/2018,roca,Glew,625419
+283,11/2018,roca,Gonnet,27502
+284,11/2018,roca,Guernica,140900
+285,11/2018,roca,Gutierrez,6431
+286,11/2018,roca,H. Espanol,14
+287,11/2018,roca,Haedo,2243
+288,11/2018,roca,Hudson,64843
+289,11/2018,roca,J. Marmol,55502
+290,11/2018,roca,Jeppener,4
+291,11/2018,roca,Juan XXIII,1
+292,11/2018,roca,Kloosterman,131
+293,11/2018,roca,Km. 33,4
+294,11/2018,roca,Km. 34,14
+295,11/2018,roca,L. De Zamora,1030635
+296,11/2018,roca,L. Guillon,136139
+297,11/2018,roca,La Noria,4
+298,11/2018,roca,La Plata,300472
+299,11/2018,roca,Lanus,890430
+300,11/2018,roca,Levene,63
+301,11/2018,roca,Llavallol,91191
+302,11/2018,roca,Longchamps,456571
+303,11/2018,roca,Maximo Paz,5702
+304,11/2018,roca,Monte,1
+305,11/2018,roca,Monte Grande,552226
+306,11/2018,roca,Pereyra,3103
+307,11/2018,roca,Platanos,49403
+308,11/2018,roca,Policlinico,52
+309,11/2018,roca,Quilmes,389528
+310,11/2018,roca,Ranelagh,38501
+311,11/2018,roca,Ringuelet,9596
+312,11/2018,roca,San Justo,343
+313,11/2018,roca,Santa Sofia,13375
+314,11/2018,roca,Sarandi,49865
+315,11/2018,roca,Sourigues,41252
+316,11/2018,roca,Spegazzini,13951
+317,11/2018,roca,Sta. Catalina,1
+318,11/2018,roca,Tablada,305
+319,11/2018,roca,Temperley,285294
+320,11/2018,roca,Tolosa,10617
+321,11/2018,roca,Tristan Suarez,28131
+322,11/2018,roca,Turdera,95855
+323,11/2018,roca,U. Ferroviaria,2517
+324,11/2018,roca,V. Casares,126
+325,11/2018,roca,V. Dominico,22017
+326,11/2018,roca,Villa Elisa,43083
+327,11/2018,roca,Villa Espana,40134
+328,11/2018,roca,Wilde,78117
+329,11/2018,roca,Yrigoyen,94917
+330,11/2018,roca,Zeballos,98874
+438,10/2018,roca,A. De Elia,3
+439,10/2018,roca,A. Petion,6281
+440,10/2018,roca,A.korn,231126
+441,10/2018,roca,Adrogue,352433
+442,10/2018,roca,Ardigo,147213
+443,10/2018,roca,Banfield,642671
+444,10/2018,roca,Berazategui,289984
+445,10/2018,roca,Bernal,148414
+446,10/2018,roca,Bosques,115204
+447,10/2018,roca,Brandsen,184
+448,10/2018,roca,Burzaco,582419
+449,10/2018,roca,Calzada,170609
+450,10/2018,roca,Canuelas,30886
+451,10/2018,roca,Chascomus,644
+452,10/2018,roca,City Bell,49172
+453,10/2018,roca,Claypole,321383
+454,10/2018,roca,Constitucion,4734188
+455,10/2018,roca,Dario Y Maxi,316364
+456,10/2018,roca,Don Bosco,65139
+457,10/2018,roca,El Jaguel,227378
+458,10/2018,roca,Escalada,166199
+459,10/2018,roca,Ezeiza,535738
+460,10/2018,roca,Ezpeleta,220439
+461,10/2018,roca,F. Varela,303297
+462,10/2018,roca,Gerli,178127
+463,10/2018,roca,Glew,717240
+464,10/2018,roca,Gonnet,29885
+465,10/2018,roca,Guernica,155494
+466,10/2018,roca,Gutierrez,7888
+467,10/2018,roca,H. Espanol,16
+468,10/2018,roca,Haedo,2651
+469,10/2018,roca,Hudson,76179
+470,10/2018,roca,J. Marmol,63591
+471,10/2018,roca,Jeppener,1
+472,10/2018,roca,Juan XXIII,1
+473,10/2018,roca,Kloosterman,185
+474,10/2018,roca,Km. 33,6
+475,10/2018,roca,Km. 34,7
+476,10/2018,roca,L. De Zamora,1210977
+477,10/2018,roca,L. Guillon,161085
+478,10/2018,roca,La Noria,3
+479,10/2018,roca,La Plata,328377
+480,10/2018,roca,Lanus,997612
+481,10/2018,roca,Levene,94
+482,10/2018,roca,Llavallol,103258
+483,10/2018,roca,Longchamps,518687
+484,10/2018,roca,Maximo Paz,12928
+485,10/2018,roca,Monte,8
+486,10/2018,roca,Monte Grande,600471
+487,10/2018,roca,Pereyra,1223
+488,10/2018,roca,Platanos,57227
+489,10/2018,roca,Policlinico,184
+490,10/2018,roca,Quilmes,428183
+491,10/2018,roca,Ranelagh,30872
+492,10/2018,roca,Ringuelet,10235
+493,10/2018,roca,San Justo,330
+494,10/2018,roca,Santa Sofia,16004
+495,10/2018,roca,Sarandi,52084
+496,10/2018,roca,Sourigues,30563
+497,10/2018,roca,Spegazzini,14123
+498,10/2018,roca,Tablada,376
+499,10/2018,roca,Temperley,320104
+500,10/2018,roca,Tolosa,6412
+501,10/2018,roca,Tristan Suarez,26852
+502,10/2018,roca,Turdera,115207
+503,10/2018,roca,U. Ferroviaria,151
+504,10/2018,roca,V. Casares,114
+505,10/2018,roca,V. Dominico,43079
+506,10/2018,roca,Villa Elisa,53244
+507,10/2018,roca,Villa Espana,32585
+508,10/2018,roca,Wilde,84897
+509,10/2018,roca,Yrigoyen,106499
+510,10/2018,roca,Zeballos,107695
+622,09/2018,roca,A. De Elia,17
+623,09/2018,roca,A. Petion,5979
+624,09/2018,roca,A.korn,207211
+625,09/2018,roca,Adrogue,319439
+626,09/2018,roca,Ardigo,128095
+627,09/2018,roca,Banfield,568711
+628,09/2018,roca,Berazategui,249270
+629,09/2018,roca,Bernal,118000
+630,09/2018,roca,Bosques,84140
+631,09/2018,roca,Brandsen,683
+632,09/2018,roca,Burzaco,515017
+633,09/2018,roca,Calzada,154674
+634,09/2018,roca,Canuelas,27450
+635,09/2018,roca,Chascomus,1354
+636,09/2018,roca,City Bell,47638
+637,09/2018,roca,Claypole,291537
+638,09/2018,roca,Constitucion,4178554
+639,09/2018,roca,Dario Y Maxi,286010
+640,09/2018,roca,Don Bosco,50118
+641,09/2018,roca,El Jaguel,146348
+642,09/2018,roca,Escalada,144341
+643,09/2018,roca,Ezeiza,495371
+644,09/2018,roca,Ezpeleta,163801
+645,09/2018,roca,F. Varela,250948
+646,09/2018,roca,Gerli,155050
+647,09/2018,roca,Glew,652293
+648,09/2018,roca,Gonnet,24575
+649,09/2018,roca,Guernica,136975
+650,09/2018,roca,Gutierrez,5701
+651,09/2018,roca,H. Espanol,15
+652,09/2018,roca,Haedo,2120
+653,09/2018,roca,Hudson,67300
+654,09/2018,roca,J. Marmol,53359
+655,09/2018,roca,Jeppener,3
+656,09/2018,roca,Juan XXIII,8
+657,09/2018,roca,Kloosterman,198
+658,09/2018,roca,Km. 33,1
+659,09/2018,roca,Km. 34,3
+660,09/2018,roca,L. De Zamora,1089927
+661,09/2018,roca,L. Guillon,144731
+662,09/2018,roca,La Noria,2
+663,09/2018,roca,La Plata,327390
+664,09/2018,roca,Lanus,899907
+665,09/2018,roca,Levene,74
+666,09/2018,roca,Llavallol,94976
+667,09/2018,roca,Longchamps,479639
+668,09/2018,roca,Maximo Paz,723
+669,09/2018,roca,Monte,149
+670,09/2018,roca,Monte Grande,542941
+671,09/2018,roca,Pereyra,822
+672,09/2018,roca,Platanos,54539
+673,09/2018,roca,Policlinico,165
+674,09/2018,roca,Quilmes,360725
+675,09/2018,roca,Ranelagh,13464
+676,09/2018,roca,Ringuelet,9477
+677,09/2018,roca,San Justo,319
+678,09/2018,roca,Santa Sofia,14518
+679,09/2018,roca,Sarandi,43387
+680,09/2018,roca,Sourigues,14813
+681,09/2018,roca,Spegazzini,12374
+682,09/2018,roca,Tablada,321
+683,09/2018,roca,Temperley,285344
+684,09/2018,roca,Tolosa,14493
+685,09/2018,roca,Tristan Suarez,20773
+686,09/2018,roca,Turdera,103273
+687,09/2018,roca,U. Ferroviaria,133
+688,09/2018,roca,V. Casares,117
+689,09/2018,roca,V. Dominico,4833
+690,09/2018,roca,Villa Elisa,41080
+691,09/2018,roca,Villa Espana,9436
+692,09/2018,roca,Wilde,64547
+693,09/2018,roca,Yrigoyen,92149
+694,09/2018,roca,Zeballos,91048
+810,08/2018,roca,A. De Elia,30
+811,08/2018,roca,A. Petion,6251
+812,08/2018,roca,A.korn,230035
+813,08/2018,roca,Abbot,7
+814,08/2018,roca,Adrogue,350105
+815,08/2018,roca,Ardigo,143697
+816,08/2018,roca,Banfield,627195
+817,08/2018,roca,Berazategui,284571
+818,08/2018,roca,Bernal,92099
+819,08/2018,roca,Bosques,96296
+820,08/2018,roca,Brandsen,1098
+821,08/2018,roca,Brian,1
+822,08/2018,roca,Burzaco,574624
+823,08/2018,roca,Calzada,171302
+824,08/2018,roca,Canuelas,29117
+825,08/2018,roca,Chascomus,2385
+826,08/2018,roca,City Bell,47461
+827,08/2018,roca,Claypole,315505
+828,08/2018,roca,Constitucion,4635975
+829,08/2018,roca,Dario Y Maxi,303821
+830,08/2018,roca,Don Bosco,57633
+831,08/2018,roca,El Jaguel,217412
+832,08/2018,roca,Escalada,158135
+833,08/2018,roca,Ezeiza,541570
+834,08/2018,roca,Ezpeleta,196005
+835,08/2018,roca,F. Varela,280201
+836,08/2018,roca,Gerli,164623
+837,08/2018,roca,Glew,705453
+838,08/2018,roca,Gonnet,20757
+839,08/2018,roca,Guernica,151224
+840,08/2018,roca,Gutierrez,8371
+841,08/2018,roca,H. Espanol,24
+842,08/2018,roca,Haedo,3141
+843,08/2018,roca,Hudson,69731
+844,08/2018,roca,J. Marmol,58510
+845,08/2018,roca,Juan XXIII,5
+846,08/2018,roca,Kloosterman,144
+847,08/2018,roca,Km. 33,10
+848,08/2018,roca,Km. 34,7
+849,08/2018,roca,L. De Zamora,1205164
+850,08/2018,roca,L. Guillon,157494
+851,08/2018,roca,La Noria,4
+852,08/2018,roca,La Plata,354286
+853,08/2018,roca,Lanus,999585
+854,08/2018,roca,Levene,112
+855,08/2018,roca,Llavallol,101749
+856,08/2018,roca,Longchamps,533911
+857,08/2018,roca,Maximo Paz,1058
+858,08/2018,roca,Monte,69
+859,08/2018,roca,Monte Grande,611677
+860,08/2018,roca,Pereyra,1141
+861,08/2018,roca,Platanos,54527
+862,08/2018,roca,Policlinico,214
+863,08/2018,roca,Quilmes,376315
+864,08/2018,roca,Ranelagh,9291
+865,08/2018,roca,Ringuelet,9275
+866,08/2018,roca,San Justo,407
+867,08/2018,roca,Santa Sofia,15992
+868,08/2018,roca,Sarandi,46377
+869,08/2018,roca,Sourigues,16077
+870,08/2018,roca,Spegazzini,12360
+871,08/2018,roca,Sta. Catalina,1
+872,08/2018,roca,Tablada,387
+873,08/2018,roca,Temperley,318930
+874,08/2018,roca,Tolosa,12550
+875,08/2018,roca,Tristan Suarez,20955
+876,08/2018,roca,Turdera,108837
+877,08/2018,roca,U. Ferroviaria,152
+878,08/2018,roca,V. Casares,149
+879,08/2018,roca,V. Dominico,41354
+880,08/2018,roca,Villa Elisa,39913
+881,08/2018,roca,Villa Espana,10387
+882,08/2018,roca,Wilde,74511
+883,08/2018,roca,Yrigoyen,101452
+884,08/2018,roca,Zeballos,99393

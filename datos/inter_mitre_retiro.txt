@@ -1,0 +1,11 @@
+id,mes,linea,estacion,cantidad
+56,12/2018,mitre,Retiro,583005
+57,12/2018,mitre,Retiro,688576
+239,11/2018,mitre,Retiro,632640
+240,11/2018,mitre,Retiro,768854
+422,10/2018,mitre,Retiro,729252
+423,10/2018,mitre,Retiro,861893
+606,09/2018,mitre,Retiro,639816
+607,09/2018,mitre,Retiro,688849
+794,08/2018,mitre,Retiro,713114
+795,08/2018,mitre,Retiro,744735

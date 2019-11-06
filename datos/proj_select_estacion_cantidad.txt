@@ -1,0 +1,372 @@
+id,estacion,cantidad
+72,A. De Elia,12
+73,A. Petion,4808
+74,A.korn,192618
+75,Adrogue,291166
+76,Ardigo,134124
+77,Banfield,501573
+78,Berazategui,205276
+79,Bernal,111737
+80,Bosques,103979
+81,Brandsen,137
+82,Brian,2
+83,Burzaco,447091
+84,Calzada,144693
+85,Canuelas,25908
+86,Chascomus,121
+87,City Bell,40333
+88,Claypole,221629
+89,Constitucion,3958497
+90,Dario Y Maxi,219828
+91,Don Bosco,46084
+92,El Jaguel,176919
+93,Escalada,119281
+94,Ezeiza,436366
+95,Ezpeleta,159641
+96,F. Varela,309044
+97,Gerli,143373
+98,Glew,558439
+99,Gonnet,18350
+100,Guernica,131566
+101,Gutierrez,5508
+102,H. Espanol,12
+103,Haedo,2214
+104,Hudson,57843
+105,J. Marmol,52627
+106,Juan XXIII,1
+107,Kloosterman,103
+108,Km. 33,5
+109,Km. 34,11
+110,L. De Zamora,1007243
+111,L. Guillon,120379
+112,La Noria,2
+113,La Plata,229855
+114,Lanus,814018
+115,Levene,57
+116,Llavallol,83439
+117,Longchamps,394560
+118,Maximo Paz,9414
+119,Monte,1
+120,Monte Grande,509488
+121,Pereyra,1986
+122,Platanos,42465
+123,Policlinico,1
+124,Quilmes,368441
+125,Ranelagh,30231
+126,Ringuelet,7757
+127,San Justo,279
+128,Santa Sofia,11361
+129,Sarandi,44129
+130,Sourigues,33070
+131,Spegazzini,12350
+132,Sta. Catalina,1
+133,Tablada,277
+134,Temperley,237125
+135,Tolosa,15017
+136,Tristan Suarez,21709
+137,Turdera,91303
+138,U. Ferroviaria,1905
+139,V. Casares,58
+140,V. Dominico,32465
+141,Villa Elisa,34723
+142,Villa Espana,35418
+143,Wilde,58112
+144,Yrigoyen,80989
+145,Zeballos,95396
+255,A. De Elia,3
+256,A. Petion,5927
+257,A.korn,208114
+258,Adrogue,318368
+259,Altamirano,1
+260,Ardigo,131934
+261,Banfield,570957
+262,Berazategui,255501
+263,Bernal,142304
+264,Bosques,105934
+265,Brandsen,140
+266,Brian,1
+267,Burzaco,514206
+268,Calzada,154286
+269,Canuelas,27529
+270,Chascomus,237
+271,City Bell,43745
+272,Claypole,271229
+273,Constitucion,4192582
+274,Dario Y Maxi,276339
+275,Don Bosco,58967
+276,El Jaguel,200200
+277,Escalada,143320
+278,Ezeiza,381684
+279,Ezpeleta,200545
+280,F. Varela,281153
+281,Gerli,158475
+282,Glew,625419
+283,Gonnet,27502
+284,Guernica,140900
+285,Gutierrez,6431
+286,H. Espanol,14
+287,Haedo,2243
+288,Hudson,64843
+289,J. Marmol,55502
+290,Jeppener,4
+291,Juan XXIII,1
+292,Kloosterman,131
+293,Km. 33,4
+294,Km. 34,14
+295,L. De Zamora,1030635
+296,L. Guillon,136139
+297,La Noria,4
+298,La Plata,300472
+299,Lanus,890430
+300,Levene,63
+301,Llavallol,91191
+302,Longchamps,456571
+303,Maximo Paz,5702
+304,Monte,1
+305,Monte Grande,552226
+306,Pereyra,3103
+307,Platanos,49403
+308,Policlinico,52
+309,Quilmes,389528
+310,Ranelagh,38501
+311,Ringuelet,9596
+312,San Justo,343
+313,Santa Sofia,13375
+314,Sarandi,49865
+315,Sourigues,41252
+316,Spegazzini,13951
+317,Sta. Catalina,1
+318,Tablada,305
+319,Temperley,285294
+320,Tolosa,10617
+321,Tristan Suarez,28131
+322,Turdera,95855
+323,U. Ferroviaria,2517
+324,V. Casares,126
+325,V. Dominico,22017
+326,Villa Elisa,43083
+327,Villa Espana,40134
+328,Wilde,78117
+329,Yrigoyen,94917
+330,Zeballos,98874
+438,A. De Elia,3
+439,A. Petion,6281
+440,A.korn,231126
+441,Adrogue,352433
+442,Ardigo,147213
+443,Banfield,642671
+444,Berazategui,289984
+445,Bernal,148414
+446,Bosques,115204
+447,Brandsen,184
+448,Burzaco,582419
+449,Calzada,170609
+450,Canuelas,30886
+451,Chascomus,644
+452,City Bell,49172
+453,Claypole,321383
+454,Constitucion,4734188
+455,Dario Y Maxi,316364
+456,Don Bosco,65139
+457,El Jaguel,227378
+458,Escalada,166199
+459,Ezeiza,535738
+460,Ezpeleta,220439
+461,F. Varela,303297
+462,Gerli,178127
+463,Glew,717240
+464,Gonnet,29885
+465,Guernica,155494
+466,Gutierrez,7888
+467,H. Espanol,16
+468,Haedo,2651
+469,Hudson,76179
+470,J. Marmol,63591
+471,Jeppener,1
+472,Juan XXIII,1
+473,Kloosterman,185
+474,Km. 33,6
+475,Km. 34,7
+476,L. De Zamora,1210977
+477,L. Guillon,161085
+478,La Noria,3
+479,La Plata,328377
+480,Lanus,997612
+481,Levene,94
+482,Llavallol,103258
+483,Longchamps,518687
+484,Maximo Paz,12928
+485,Monte,8
+486,Monte Grande,600471
+487,Pereyra,1223
+488,Platanos,57227
+489,Policlinico,184
+490,Quilmes,428183
+491,Ranelagh,30872
+492,Ringuelet,10235
+493,San Justo,330
+494,Santa Sofia,16004
+495,Sarandi,52084
+496,Sourigues,30563
+497,Spegazzini,14123
+498,Tablada,376
+499,Temperley,320104
+500,Tolosa,6412
+501,Tristan Suarez,26852
+502,Turdera,115207
+503,U. Ferroviaria,151
+504,V. Casares,114
+505,V. Dominico,43079
+506,Villa Elisa,53244
+507,Villa Espana,32585
+508,Wilde,84897
+509,Yrigoyen,106499
+510,Zeballos,107695
+622,A. De Elia,17
+623,A. Petion,5979
+624,A.korn,207211
+625,Adrogue,319439
+626,Ardigo,128095
+627,Banfield,568711
+628,Berazategui,249270
+629,Bernal,118000
+630,Bosques,84140
+631,Brandsen,683
+632,Burzaco,515017
+633,Calzada,154674
+634,Canuelas,27450
+635,Chascomus,1354
+636,City Bell,47638
+637,Claypole,291537
+638,Constitucion,4178554
+639,Dario Y Maxi,286010
+640,Don Bosco,50118
+641,El Jaguel,146348
+642,Escalada,144341
+643,Ezeiza,495371
+644,Ezpeleta,163801
+645,F. Varela,250948
+646,Gerli,155050
+647,Glew,652293
+648,Gonnet,24575
+649,Guernica,136975
+650,Gutierrez,5701
+651,H. Espanol,15
+652,Haedo,2120
+653,Hudson,67300
+654,J. Marmol,53359
+655,Jeppener,3
+656,Juan XXIII,8
+657,Kloosterman,198
+658,Km. 33,1
+659,Km. 34,3
+660,L. De Zamora,1089927
+661,L. Guillon,144731
+662,La Noria,2
+663,La Plata,327390
+664,Lanus,899907
+665,Levene,74
+666,Llavallol,94976
+667,Longchamps,479639
+668,Maximo Paz,723
+669,Monte,149
+670,Monte Grande,542941
+671,Pereyra,822
+672,Platanos,54539
+673,Policlinico,165
+674,Quilmes,360725
+675,Ranelagh,13464
+676,Ringuelet,9477
+677,San Justo,319
+678,Santa Sofia,14518
+679,Sarandi,43387
+680,Sourigues,14813
+681,Spegazzini,12374
+682,Tablada,321
+683,Temperley,285344
+684,Tolosa,14493
+685,Tristan Suarez,20773
+686,Turdera,103273
+687,U. Ferroviaria,133
+688,V. Casares,117
+689,V. Dominico,4833
+690,Villa Elisa,41080
+691,Villa Espana,9436
+692,Wilde,64547
+693,Yrigoyen,92149
+694,Zeballos,91048
+810,A. De Elia,30
+811,A. Petion,6251
+812,A.korn,230035
+813,Abbot,7
+814,Adrogue,350105
+815,Ardigo,143697
+816,Banfield,627195
+817,Berazategui,284571
+818,Bernal,92099
+819,Bosques,96296
+820,Brandsen,1098
+821,Brian,1
+822,Burzaco,574624
+823,Calzada,171302
+824,Canuelas,29117
+825,Chascomus,2385
+826,City Bell,47461
+827,Claypole,315505
+828,Constitucion,4635975
+829,Dario Y Maxi,303821
+830,Don Bosco,57633
+831,El Jaguel,217412
+832,Escalada,158135
+833,Ezeiza,541570
+834,Ezpeleta,196005
+835,F. Varela,280201
+836,Gerli,164623
+837,Glew,705453
+838,Gonnet,20757
+839,Guernica,151224
+840,Gutierrez,8371
+841,H. Espanol,24
+842,Haedo,3141
+843,Hudson,69731
+844,J. Marmol,58510
+845,Juan XXIII,5
+846,Kloosterman,144
+847,Km. 33,10
+848,Km. 34,7
+849,L. De Zamora,1205164
+850,L. Guillon,157494
+851,La Noria,4
+852,La Plata,354286
+853,Lanus,999585
+854,Levene,112
+855,Llavallol,101749
+856,Longchamps,533911
+857,Maximo Paz,1058
+858,Monte,69
+859,Monte Grande,611677
+860,Pereyra,1141
+861,Platanos,54527
+862,Policlinico,214
+863,Quilmes,376315
+864,Ranelagh,9291
+865,Ringuelet,9275
+866,San Justo,407
+867,Santa Sofia,15992
+868,Sarandi,46377
+869,Sourigues,16077
+870,Spegazzini,12360
+871,Sta. Catalina,1
+872,Tablada,387
+873,Temperley,318930
+874,Tolosa,12550
+875,Tristan Suarez,20955
+876,Turdera,108837
+877,U. Ferroviaria,152
+878,V. Casares,149
+879,V. Dominico,41354
+880,Villa Elisa,39913
+881,Villa Espana,10387
+882,Wilde,74511
+883,Yrigoyen,101452
+884,Zeballos,99393

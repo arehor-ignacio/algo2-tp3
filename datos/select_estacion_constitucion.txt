@@ -1,0 +1,6 @@
+id,mes,linea,estacion,cantidad
+89,12/2018,roca,Constitucion,3958497
+273,11/2018,roca,Constitucion,4192582
+454,10/2018,roca,Constitucion,4734188
+638,09/2018,roca,Constitucion,4178554
+828,08/2018,roca,Constitucion,4635975

@@ -1,0 +1,6 @@
+id,mes,linea,estacion,cantidad
+134,12/2018,roca,Temperley,237125
+319,11/2018,roca,Temperley,285294
+499,10/2018,roca,Temperley,320104
+683,09/2018,roca,Temperley,285344
+873,08/2018,roca,Temperley,318930

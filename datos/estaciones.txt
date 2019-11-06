@@ -1,0 +1,213 @@
+id_estacion,nombre_estacion
+1,3 de febrero
+2,abbot
+3,acassuso
+4,a. de elia
+5,adrogue
+6,a.korn
+7,aldo bonzi
+8,altamirano
+9,a. petion
+10,ardigo
+11,astolfi
+12,banfield
+13,beccar
+14,belgrano c.
+15,belgrano r.
+16,bella vista
+17,benavidez
+18,berazategui
+19,bernal
+20,bosques
+21,brandsen
+22,brian
+23,buenos aires
+24,burzaco
+25,b. vista
+26,caballito
+27,cabred
+28,calzada
+29,canuelas
+30,capilla del señor
+31,carranza
+32,carupa
+33,caseros
+34,castelar
+35,castello
+36,castillo
+37,centrangolo
+38,chacarita
+39,chascomus
+40,chilavert
+41,city bell
+42,ciudadela
+43,claypole
+44,coghlan
+45,colegiales
+46,constitucion
+47,dario y maxi
+48,derqui
+49,devoto
+50,don bosco
+51,drago
+52,el jaguel
+53,el palomar
+54,el talar
+55,escalada
+56,escobar
+57,estacion 25
+58,estacion 29
+59,estacion 31
+60,estacion 32
+61,estacion 33
+62,estacion 36
+63,estacion 40
+64,eva duarte
+65,ezeiza
+66,ezpeleta
+67,flores
+68,floresta
+69,florida
+70,fournier
+71,f. varela
+72,garin
+73,g. catan
+74,gerli
+75,glew
+76,gonnet
+77,guernica
+78,gutierrez
+79,haedo
+80,h. espanol
+81,hudson
+82,hurlingham
+83,i. casanova
+84,illia
+85,independencia
+86,ing. budge
+87,ituzaingo
+88,ituzaingó
+89,j.c. paz
+90,jeppener
+91,j. ingenieros
+92,j. marmol
+93,jose c paz
+94,jose leon suarez
+95,juan b. justo
+96,juan xxiii
+97,kloosterman
+98,km. 12
+99,km. 33
+100,km. 34
+101,laferrere
+102,la lucila
+103,la noria
+104,lanus
+105,la paternal
+106,la plata
+107,l. de la torre
+108,l. de zamora
+109,levene
+110,l. guillon
+111,libertad
+112,liniers
+113,llavallol
+114,longchamps
+115,lopez camelo
+116,malaver
+117,manzanares
+118,maq. savio
+119,martinez
+120,matheu
+121,maximo paz
+122,m. belgrano
+123,mendeville
+124,merlo
+125,merlo gomez
+126,migueletes
+127,miserere
+128,mitre
+129,monte
+130,monte grande
+131,mor
+132,moreno
+133,morón
+134,muniz
+135,muñiz
+136,nu
+137,nuñez
+138,olivos
+139,once
+140,palermo
+141,palomar
+142,paso del rey
+143,paternal
+144,pereyra
+145,pilar
+146,platanos
+147,policlinico
+148,puente alsina
+149,pueyrredon
+150,querandi
+151,quilmes
+152,ramos mej
+153,ramos mejía
+154,ranelagh
+155,retiro
+156,retiro (sua-mit)
+157,retiro (tigre)
+158,ringuelet
+159,rivadavia
+160,saavedra
+161,s.a de padua
+162,s.a. de padua
+163,saenz
+164,saenz pena
+165,saenz peña
+166,san andres
+167,san fernando
+168,san isidro
+169,san justo
+170,san martin
+171,san miguel
+172,santa sofia
+173,santos lugares
+174,sarandi
+175,s. lugares
+176,sol y verde
+177,sourigues
+178,spegazzini
+179,sta. catalina
+180,tablada
+181,tapiales
+182,temperley
+183,tigre
+184,tolosa
+185,tristan suarez
+186,turdera
+187,u. ferroviaria
+188,urquiza
+189,v. ballester
+190,v. casares
+191,v. devoto
+192,v. dominico
+193,vicente lopez
+194,victoria elect
+195,villa astolfi
+196,villa del parque
+197,villa elisa
+198,villa espana
+199,villa luro
+200,villegas
+201,virreyes
+202,v.lugano
+203,v. madero
+204,v. parque
+205,v. soldati
+206,wilde
+207,william morris
+208,w. morris
+209,yrigoyen
+210,zarate
+211,zeballos
+212,zelaya
