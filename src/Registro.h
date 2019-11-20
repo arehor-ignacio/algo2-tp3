@@ -4,16 +4,39 @@
 #include <set>
 
 #include "Tipos.h"
+#include "modulos_basicos/string_map.h"
 
 using namespace std;
 
 class Registro {
 public:
-    Registro();
+    /**
+     * Creates a new Registro
+     * Time complexity: O(1)
+     * */
+    Registro(): _register() {};
+
+    /**
+     * Returns the value of the field
+     * Time complexity: O(field.size)
+     * */
+    Valor& operator[](const NombreCampo& field);
+
+    /**
+     * Returns a set with all the fields of the register
+     * Time complexity: O(_register.keys.size * field)
+     * _register.keys.size = O(1)
+     * field = O(_register.keys[i].size) with i = longest key position
+     * */
     set<NombreCampo> campos() const;
-    Valor& operator[](const NombreCampo& campo);
+
+    /**
+     * Defines the value in the designed field
+     * Time complexity: O(field.size * value.size)
+     * */
+    void definir(NombreCampo field, Valor value);
 private:
-    // COMPLETAR con la representación privada.
+    string_map<Valor> _register;
 };
 
 #endif /*__REGISTRO_H__*/

@@ -13,6 +13,7 @@ public:
     /**
     CONSTRUCTOR
     * Construye un diccionario vacio.
+    * Time complexity: O(1)
     **/
     string_map();
 
@@ -97,7 +98,7 @@ public:
      * returns a set<string> representing every key added to the map
      * Time complexity: O(1)
      * */
-    set<string> keys() const;
+    const set<string>& keys() const;
 
 private:
 
