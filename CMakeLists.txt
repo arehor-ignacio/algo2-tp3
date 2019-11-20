@@ -26,14 +26,17 @@ endif()
 #add_executable(main ${SOURCE_FILES})
 add_executable(correrTests ${SOURCE_FILES} ${TEST_SOURCES})
 add_executable(correrTests-Wall ${SOURCE_FILES} ${TEST_SOURCES})
+add_executable(correrTestsStringMap ${SOURCE_FILES} tests/string_map_tests.cpp)
 
 # Necesitamos asociar los archivos del framework de testing
 target_link_libraries(correrTests gtest gtest_main)
 target_link_libraries(correrTests-Wall gtest gtest_main)
+target_link_libraries(correrTestsStringMap gtest gtest_main)
 
 ## Test suites a ejecutar
 add_test(correrTests driver_test)
 add_test(correrTests-Wall driver_test)
+add_test(correrTestsStringMap driver_test)
 
 # Target para correr Valgrind
 add_custom_target(correrValgrind
@@ -41,3 +44,5 @@ add_custom_target(correrValgrind
         DEPENDS correrTests)
 
 target_compile_options(correrTests-Wall PUBLIC -Wall)
+
+target_compile_definitions(correrTestsStringMap PUBLIC STRING_MAP_TEST)

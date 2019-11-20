@@ -97,7 +97,7 @@ public:
      * returns a set<string> representing every key added to the map
      * Time complexity: O(1)
      * */
-    set<string> keys();
+    set<string> keys() const;
 
 private:
 
@@ -110,7 +110,7 @@ private:
         Nodo(T *def) : _next(256, nullptr), _def(def) {};
     };
 
-    Nodo *_createRoot();
+    void _createRoot();
 
     bool _hasChild(Nodo *node);
 

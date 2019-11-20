@@ -139,7 +139,7 @@ bool string_map<T>::empty() const {
 }
 
 template<typename T>
-typename string_map<T>::Nodo *string_map<T>::_createRoot() {
+void string_map<T>::_createRoot() {
     if (size() == 0) {
         _root = new string_map<T>::Nodo();
         _root->_def = new T();
@@ -196,7 +196,7 @@ void string_map<T>::insert(const pair<string, T> &elem) {
 }
 
 template<typename T>
-set<string> string_map<T>::keys() {
+set<string> string_map<T>::keys() const{
     return _keys;
 }
 
