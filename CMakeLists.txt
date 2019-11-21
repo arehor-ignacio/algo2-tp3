@@ -36,7 +36,7 @@ target_link_libraries(correrTestsStringMap gtest gtest_main)
 ## Test suites a ejecutar
 add_test(correrTests driver_test)
 add_test(correrTests-Wall driver_test)
-add_test(correrTestsStringMap driver_test)
+add_test(correrTestsStringMap string_map_tests)
 
 # Target para correr Valgrind
 add_custom_target(correrValgrind
