@@ -1,8 +1,6 @@
 #include "gtest-1.8.1/gtest.h"
 #include "../src/modulos_basicos/string_map.h"
 
-#ifdef STRING_MAP_TEST
-
 TEST(string_map_test, vacio) {
     string_map<int> vacio;
 
@@ -266,5 +264,3 @@ TEST(string_map_test, metodo_keys) {
     EXPECT_EQ(map.count("adios"), 0);
     EXPECT_EQ(map.count("pepe"), 1);
 }
-
-#endif
