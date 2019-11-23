@@ -1,7 +1,7 @@
 #ifndef __REGISTRO_H__
 #define __REGISTRO_H__
 
-#include <set>
+#include <list>
 
 #include "Tipos.h"
 #include "modulos_basicos/string_map.h"
@@ -23,12 +23,12 @@ public:
     Valor& operator[](const NombreCampo& field);
 
     /**
-     * Returns a set with all the fields of the register
+     * Returns a list with all the fields of the register
      * Time complexity: O(_register.keys.size * field)
      * _register.keys.size = O(1)
      * field = O(_register.keys[i].size) with i = longest key position
      * */
-    set<NombreCampo> campos() const;
+    list<NombreCampo> campos() const;
 
     /**
      * Defines the value in the designed field

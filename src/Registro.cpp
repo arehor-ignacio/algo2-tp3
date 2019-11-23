@@ -1,6 +1,6 @@
 #include "Registro.h"
 
-set<NombreCampo> Registro::campos() const {
+list<NombreCampo> Registro::campos() const {
     return _register.keys();
 }
 
