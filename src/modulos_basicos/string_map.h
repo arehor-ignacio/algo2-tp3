@@ -3,7 +3,8 @@
 
 #include <string>
 #include <stack>
-#include <set>
+#include <list>
+#include <vector>
 
 using namespace std;
 
@@ -98,17 +99,23 @@ public:
      * returns a set<string> representing every key added to the map
      * Time complexity: O(1)
      * */
-    const set<string>& keys() const;
+    const list<string>& keys() const;
 
 private:
 
     struct Nodo {
         vector<Nodo *> _next;
-        T *_def;
+        pair<T *, list<string>::iterator> _def;
 
-        Nodo() : _next(256, nullptr), _def(nullptr) {};
+        Nodo() : _next(256, nullptr), _def() {
+            _def.first = nullptr;
+        };
 
-        Nodo(T *def) : _next(256, nullptr), _def(def) {};
+        Nodo(T *val) : _next(256, nullptr), _def() {
+            _def.first = val;
+        };
+
+        Nodo(T *val, list<string>::iterator it) : _next(256, nullptr), _def(val, it) {};
     };
 
     void _createRoot();
@@ -119,9 +126,11 @@ private:
 
     void _reCreate(Nodo *node, Nodo *nodeToCopy);
 
+    void _assignIterators();
+
     Nodo *_root;
     int _size;
-    set<string> _keys;
+    list<string> _keys;
 };
 
 #include "string_map.hpp"

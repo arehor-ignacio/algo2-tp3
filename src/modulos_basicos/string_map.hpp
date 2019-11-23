@@ -4,7 +4,7 @@ template<typename T>
 string_map<T>::string_map() {
     _root = nullptr;
     _size = 0;
-    _keys = set<string>();
+    _keys = list<string>();
 };
 
 template<typename T>
@@ -16,13 +16,15 @@ string_map<T> &string_map<T>::operator=(const string_map<T> &d) {
     _destroy(_root);
 
     if (d._root != nullptr) {
-        _root = new Nodo(new T(*(d._root->_def)));
+        _root = new Nodo(new T(*(d._root->_def.first)));
         _size = d._size;
 
         _reCreate(_root, d._root);
     }
 
     _keys = d.keys();
+
+    _assignIterators();
 
     return *this;
 }
@@ -53,12 +55,15 @@ T &string_map<T>::operator[](const string &key) {
             actual = actual->_next[c];
         }
 
-        actual->_def = new T();
+        actual->_def.first = new T();
 
         _size++;
-        _keys.insert(key);
 
-        return *(actual->_def);
+        _keys.push_back(key);
+        auto itEnd = _keys.end();
+        actual->_def.second = --itEnd;
+
+        return *(actual->_def.first);
     } else {
         //Sino lo busco normal
         return at(key);
@@ -80,7 +85,7 @@ int string_map<T>::count(const string &key) const {
         actual = actual->_next[c];
     }
 
-    return actual -> _def != nullptr;
+    return actual->_def.first != nullptr;
 }
 
 template<typename T>
@@ -96,7 +101,7 @@ T &string_map<T>::at(const string &key) {
         actual = actual->_next[int(c)];
     }
 
-    return *(actual->_def);
+    return *(actual->_def.first);
 }
 
 template<typename T>
@@ -111,21 +116,21 @@ void string_map<T>::erase(const string &key) {
         actual = actual->_next[int(c)];
     }
 
-    delete actual->_def;
-    actual->_def = nullptr;
+    delete actual->_def.first;
+    actual->_def.first = nullptr;
+    _keys.erase(actual->_def.second);
 
     while (!_hasChild(actual) && !nodeStk.empty()) {
-        delete actual->_def;
+        delete actual->_def.first;
         delete actual;
 
         actual = nodeStk.top();
         nodeStk.pop();
-        actual -> _next[keyStk.top()] = nullptr;
+        actual->_next[keyStk.top()] = nullptr;
         keyStk.pop();
     }
 
     _size--;
-    _keys.erase(key);
 }
 
 template<typename T>
@@ -142,7 +147,7 @@ template<typename T>
 void string_map<T>::_createRoot() {
     if (size() == 0) {
         _root = new string_map<T>::Nodo();
-        _root->_def = new T();
+        _root->_def.first = new T();
     }
 }
 
@@ -159,7 +164,7 @@ bool string_map<T>::_hasChild(string_map::Nodo *node) {
 template<typename T>
 void string_map<T>::_destroy(Nodo *node) {
     if (node != nullptr) {
-        delete node->_def;
+        delete node->_def.first;
 
         for (Nodo *next : node->_next) {
             if (next != nullptr) {
@@ -175,15 +180,15 @@ void string_map<T>::_reCreate(Nodo *node, Nodo *nodeToCopy) {
     for (int i = 0; i < nodeToCopy->_next.size(); i++) {
         Nodo *next = nodeToCopy->_next[i];
         if (next != nullptr) {
-            Nodo* child;
-            if (next -> _def != nullptr){
-                T* definition = new T();
-                *definition = *(next -> _def);
+            Nodo *child;
+            if (next->_def.first != nullptr) {
+                T *definition = new T();
+                *definition = *(next->_def.first);
                 child = new Nodo(definition);
             } else {
                 child = new Nodo();
             }
-            node -> _next[i] = child;
+            node->_next[i] = child;
             _reCreate(child, next);
         }
     }
@@ -191,12 +196,26 @@ void string_map<T>::_reCreate(Nodo *node, Nodo *nodeToCopy) {
 
 template<typename T>
 void string_map<T>::insert(const pair<string, T> &elem) {
-    _keys.insert(elem.first);
     (*this)[elem.first] = elem.second;
 }
 
 template<typename T>
-set<string> string_map<T>::keys() const{
+const list<string> &string_map<T>::keys() const {
     return _keys;
+}
+
+template<typename T>
+void string_map<T>::_assignIterators() {
+    auto it = _keys.begin();
+    while (it != _keys.end()) {
+        Nodo *actual = _root;
+
+        for (char c : *it) {
+            actual = actual->_next[int(c)];
+        }
+
+        actual->_def.second = it;
+        it++;
+    }
 }
 
