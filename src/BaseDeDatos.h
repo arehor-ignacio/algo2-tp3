@@ -10,7 +10,7 @@
 
 class BaseDeDatos {
 public:
-    BaseDeDatos();
+    BaseDeDatos() : _tables() {};
 
     /**
      * Returns a set with all contained nameTables

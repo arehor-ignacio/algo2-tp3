@@ -1,9 +1,5 @@
 #include "BaseDeDatos.h"
 
-BaseDeDatos::BaseDeDatos() {
-
-}
-
 const list<NombreTabla>& BaseDeDatos::Tablas() const {
     return _tables.keys();
 }
