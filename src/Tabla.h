@@ -8,6 +8,9 @@
 
 class Tabla {
 public:
+    //No debe ser usado, solo creado para compatibilidad con string_map
+    Tabla() : _valuesByField(), _key(), _registers() {};
+
     Tabla(set<NombreCampo> fields, NombreCampo key) : _valuesByField(), _key(key), _registers() {
         _key = key;
         for (NombreCampo field : fields) {
