@@ -5,6 +5,8 @@
 #include <stack>
 #include <list>
 #include <vector>
+#include "linear_set.h"
+#include "linear_set_iterators.h"
 
 using namespace std;
 
@@ -49,6 +51,12 @@ public:
     **/
 
     T &operator[](const string &key);
+
+    /**
+    operator==
+    * Devuelve true sii las keys son iguales y todos sus valores son iguales
+    **/
+    bool operator==(const string_map toCompare) const;
 
     /**
     COUNT
@@ -99,23 +107,23 @@ public:
      * returns a set<string> representing every key added to the map
      * Time complexity: O(1)
      * */
-    const list<string>& keys() const;
+    const linear_set<string>& keys() const;
 
 private:
 
     struct Nodo {
         vector<Nodo *> _next;
-        pair<T *, list<string>::iterator> _def;
+        pair<T *, linear_set<string>::iterator> _def;
 
-        Nodo() : _next(256, nullptr), _def() {
-            _def.first = nullptr;
+        Nodo() : _next(256, nullptr), _def(nullptr, _template.begin()) {
+
         };
 
-        Nodo(T *val) : _next(256, nullptr), _def() {
-            _def.first = val;
+        Nodo(T *val) : _next(256, nullptr), _def(val, _template.begin()) {
+
         };
 
-        Nodo(T *val, list<string>::iterator it) : _next(256, nullptr), _def(val, it) {};
+        Nodo(T *val, linear_set<string>::iterator it) : _next(256, nullptr), _def(val, it) {};
     };
 
     void _createRoot();
@@ -128,9 +136,14 @@ private:
 
     void _assignIterators();
 
+    //This should be defined in linear_set<T>::iterator, but it isn't. We need it get the last it
+    //Because of this, the complexity became linear instead of constant. If it was declared in linear_set it would be constant
+    linear_set<string>::iterator _getLastIt(linear_set<string>::iterator begin, linear_set<string>::iterator last);
+
     Nodo *_root;
     int _size;
-    list<string> _keys;
+    linear_set<string> _keys;
+    static linear_set<string> _template;
 };
 
 #include "string_map.hpp"

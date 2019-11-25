@@ -1,10 +1,14 @@
 #include "string_map.h"
 
+//This is used to initialize Nodo, as we dont have an empty init for linear_set iterator
+template<typename T>
+linear_set<string> string_map<T>::_template = linear_set<string>();
+
 template<typename T>
 string_map<T>::string_map() {
     _root = nullptr;
     _size = 0;
-    _keys = list<string>();
+    _keys = linear_set<string>();
 };
 
 template<typename T>
@@ -59,9 +63,8 @@ T &string_map<T>::operator[](const string &key) {
 
         _size++;
 
-        _keys.push_back(key);
-        auto itEnd = _keys.end();
-        actual->_def.second = --itEnd;
+        _keys.insert(key);
+        actual->_def.second = _getLastIt(_keys.begin(), _keys.end());
 
         return *(actual->_def.first);
     } else {
@@ -90,7 +93,7 @@ int string_map<T>::count(const string &key) const {
 
 template<typename T>
 const T &string_map<T>::at(const string &key) const {
-    at(key);
+    return at(key);
 }
 
 template<typename T>
@@ -200,7 +203,7 @@ void string_map<T>::insert(const pair<string, T> &elem) {
 }
 
 template<typename T>
-const list<string> &string_map<T>::keys() const {
+const linear_set<string> &string_map<T>::keys() const {
     return _keys;
 }
 
@@ -215,7 +218,35 @@ void string_map<T>::_assignIterators() {
         }
 
         actual->_def.second = it;
-        it++;
+        ++it;
     }
+}
+
+template<typename T>
+bool string_map<T>::operator==(const string_map toCompare) const {
+    if (!(this->_keys == toCompare._keys)) { return false; }
+
+    if (_keys.size() == 0) { return true; }
+
+    for (string key : this->keys()) {
+        bool isKeyEqual = (*this).at(key) == toCompare.at(key);
+        if (!isKeyEqual) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+template<typename T>
+linear_set<string>::iterator
+string_map<T>::_getLastIt(linear_set<string>::iterator begin, linear_set<string>::iterator last) {
+    linear_set<string>::iterator prior = begin;
+
+    while(++begin != last) {
+        prior = begin;
+    }
+
+    return prior;
 }
 

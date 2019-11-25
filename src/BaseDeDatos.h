@@ -16,7 +16,7 @@ public:
      * Returns a set with all contained nameTables
      * Time complexity: O(1)
      * */
-    const list<NombreTabla> &Tablas() const;
+    const linear_set<NombreTabla> &Tablas() const;
 
     /**
      * Returns the table associated with the name

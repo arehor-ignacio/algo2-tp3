@@ -13,7 +13,7 @@ void Tabla::borrar(Valor keyValue) {
     if (!reg.empty()) {
         //Obtengo el it del registro asociado al valor del campo clave
         //Como todos los regs tienen valores diferentes en el campo clave, hay un único valor en el set de regs
-        auto itRegisterToErase = *(reg.begin());
+        RegisterIt itRegisterToErase = *(reg.begin());
         _eraseRegisterValues(itRegisterToErase);
 
         //También lo eliminamos del set de registros
@@ -21,7 +21,7 @@ void Tabla::borrar(Valor keyValue) {
     }
 }
 
-const list<NombreCampo> &Tabla::campos() {
+const linear_set<NombreCampo> &Tabla::campos() {
     return _valuesByField.keys();
 }
 
@@ -29,7 +29,7 @@ const NombreCampo &Tabla::clave() {
     return _key;
 }
 
-const set<Registro> &Tabla::registros() {
+const linear_set<Registro> &Tabla::registros() {
     return _registers;
 }
 

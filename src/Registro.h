@@ -14,7 +14,7 @@ public:
      * Creates a new Registro
      * Time complexity: O(1)
      * */
-    Registro(): _register() {};
+    Registro() : _register() {};
 
     /**
      * Returns the value of the field
@@ -22,13 +22,18 @@ public:
      * */
     Valor& operator[](const NombreCampo& field);
 
+    bool operator==(const Registro reg) const{
+        return this->_register == reg._register;
+    }
+
+
     /**
      * Returns a list with all the fields of the register
      * Time complexity: O(_register.keys.size * field)
      * _register.keys.size = O(1)
      * field = O(_register.keys[i].size) with i = longest key position
      * */
-    list<NombreCampo> campos() const;
+    linear_set<NombreCampo> campos() const;
 
     /**
      * Defines the value in the designed field

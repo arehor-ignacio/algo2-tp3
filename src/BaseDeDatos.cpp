@@ -1,6 +1,6 @@
 #include "BaseDeDatos.h"
 
-const list<NombreTabla>& BaseDeDatos::Tablas() const {
+const linear_set<NombreTabla>& BaseDeDatos::Tablas() const {
     return _tables.keys();
 }
 

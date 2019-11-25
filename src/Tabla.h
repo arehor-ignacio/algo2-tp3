@@ -5,6 +5,7 @@
 #include <list>
 #include "Registro.h"
 #include "Tipos.h"
+#include "modulos_basicos/linear_set.h"
 
 class Tabla {
 public:
@@ -22,22 +23,22 @@ public:
 
     void borrar(Valor keyValue);
 
-    const list<NombreCampo>& campos();
+    const linear_set<NombreCampo>& campos();
 
     const NombreCampo& clave();
 
-    const set<Registro>& registros();
+    const linear_set<Registro>& registros();
 
 private:
-    typedef set<Registro>::iterator RegisterIt;
-    typedef set<RegisterIt> RegisterValue;
+    typedef linear_set<Registro>::iterator RegisterIt;
+    typedef linear_set<RegisterIt> RegisterValue;
 
     RegisterIt _getNewRegisterIt(Registro newReg);
     void _eraseRegisterValues(RegisterIt it);
 
     string_map<string_map<RegisterValue>> _valuesByField;
     NombreCampo _key;
-    set<Registro> _registers;
+    linear_set<Registro> _registers;
 };
 
 #endif //TP3_TABLA_H
