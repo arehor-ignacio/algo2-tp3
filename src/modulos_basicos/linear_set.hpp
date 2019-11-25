@@ -56,6 +56,11 @@ typename linear_set<T>::size_type linear_set<T>::erase(const T &x) {
 }
 
 template<class T>
+typename linear_set<T>::iterator linear_set<T>::erase(const iterator &it) {
+  return iterator(_elems.erase(it.it));
+}
+
+template<class T>
 linear_set<T>& linear_set<T>::operator=(const linear_set<T> &other) {
   _elems = other._elems;
   return *this;

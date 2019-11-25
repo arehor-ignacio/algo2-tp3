@@ -89,6 +89,7 @@ typename linear_map<K, S>::size_type linear_map<K, S>::erase(const K& key) {
       return 1;
     }
   }
+  return 0;
 }
 
 template<class K, class S>
@@ -136,4 +137,7 @@ std::ostream &operator<<(std::ostream &os, const linear_map<K, S>& m) {
     return os;
 }
 
-
+template<class K, class S>
+typename linear_map<K, S>::iterator linear_map<K, S>::erase(const iterator& it) {
+  return _elems.erase(it);
+}

@@ -212,6 +212,7 @@ class linear_map {
    * \complexity{\O(#claves(\P{this}))}
    */
   size_type erase(const K& key);
+  iterator erase(const iterator& it);
   
   /** 
    * @brief Operador asignación del diccionario

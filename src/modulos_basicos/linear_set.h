@@ -132,6 +132,16 @@ class linear_set {
    * \complexity{\O(#claves(\P{this}))}
    */
   size_type erase(const T &x); 
+  
+  /**
+   * @brief Elimina el valor apuntado por el iterador. 
+   *
+   * \pre c == \P{this} \LAND it refiere a un elemento en esta colección.
+   * \post \P{this} == c - {x} \LAND \P{res} = 1 
+   *
+   * \complexity{\O(1)}
+   */
+  iterator erase(const iterator &it); 
 
   /**
    * @brief Devuelve un iterador relacionado al valor buscado.
