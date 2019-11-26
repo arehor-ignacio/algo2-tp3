@@ -20,7 +20,7 @@ public:
      * Returns the value of the field
      * Time complexity: O(field.size)
      * */
-    Valor& operator[](const NombreCampo& field);
+    Valor operator[](const NombreCampo& field);
 
     bool operator==(const Registro reg) const{
         return this->_register == reg._register;
