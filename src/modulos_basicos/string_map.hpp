@@ -93,7 +93,13 @@ int string_map<T>::count(const string &key) const {
 
 template<typename T>
 const T &string_map<T>::at(const string &key) const {
-    return at(key);
+    Nodo *actual = _root;
+
+    for (char c : key) {
+        actual = actual->_next[int(c)];
+    }
+
+    return *(actual->_def.first);
 }
 
 template<typename T>
