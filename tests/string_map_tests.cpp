@@ -264,3 +264,22 @@ TEST(string_map_test, metodo_keys) {
     EXPECT_EQ(map.count("adios"), 0);
     EXPECT_EQ(map.count("pepe"), 1);
 }
+
+TEST(string_map_test, operator_equals) {
+    string_map<int> stringMap1, stringMap2, stringMap3;
+
+    stringMap1["hola"] = 1;
+    stringMap1["chau"] = 2;
+    stringMap1["adios"] = 3;
+
+    stringMap2["hola"] = 1;
+    stringMap2["chau"] = 3;
+    stringMap2["adios"] = 2;
+
+    stringMap3["hola"] = 1;
+    stringMap3["chau"] = 2;
+    stringMap3["adios"] = 3;
+
+    EXPECT_FALSE(stringMap1 == stringMap2);
+    EXPECT_TRUE(stringMap1 == stringMap3);
+}
