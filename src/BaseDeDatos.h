@@ -20,6 +20,7 @@ public:
 
     /**
      * Returns the table associated with the name
+     * Pre = {_tables.count(tableName) > 0}
      * Time complexity: O(1)
      * */
     Tabla &ObtenerTabla(const NombreTabla& tableName);
