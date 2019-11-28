@@ -19,21 +19,27 @@ public:
         }
     };
 
+    bool operator==(const Tabla table) const {
+        return this->_valuesByField == table._valuesByField && this->_key == table._key &&
+               this->_registers == table._registers;
+    }
+
     void insertar(Registro reg);
 
     void borrar(Valor keyValue);
 
-    const linear_set<NombreCampo>& campos();
+    const linear_set<NombreCampo> &campos();
 
-    const NombreCampo& clave();
+    const NombreCampo &clave();
 
-    const linear_set<Registro>& registros();
+    const linear_set<Registro> &registros();
 
 private:
     typedef linear_set<Registro>::iterator RegisterIt;
     typedef linear_set<RegisterIt> RegisterValue;
 
     RegisterIt _getNewRegisterIt(Registro newReg);
+
     void _eraseRegisterValues(RegisterIt it);
 
     string_map<string_map<RegisterValue>> _valuesByField;
