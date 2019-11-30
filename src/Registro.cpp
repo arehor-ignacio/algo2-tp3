@@ -4,7 +4,7 @@ linear_set<NombreCampo> Registro::campos() const {
     return _register.keys();
 }
 
-const Valor& Registro::operator[](const NombreCampo& campo) const {
+Valor& Registro::operator[](const NombreCampo& campo){
     return _register.at(campo);
 }
 

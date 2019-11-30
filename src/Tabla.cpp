@@ -1,6 +1,6 @@
 #include "Tabla.h"
 
-void Tabla::insertar(const Registro& reg) {
+void Tabla::insertar(Registro reg) {
     auto it = _getNewRegisterIt(reg);
     for (const NombreCampo &field : reg.campos()) {
         Valor value = reg[field];
@@ -8,7 +8,7 @@ void Tabla::insertar(const Registro& reg) {
     }
 }
 
-void Tabla::borrar(const Valor& keyValue) {
+void Tabla::borrar(Valor keyValue) {
     RegisterValue reg = _valuesByField[_key][keyValue];
     if (!reg.empty()) {
         //Obtengo el it del registro asociado al valor del campo clave
