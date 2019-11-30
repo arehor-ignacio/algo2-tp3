@@ -24,9 +24,9 @@ public:
                this->_registers == table._registers;
     }
 
-    void insertar(Registro reg);
+    void insertar(const Registro& reg);
 
-    void borrar(Valor keyValue);
+    void borrar(const Valor& keyValue);
 
     const linear_set<NombreCampo> &campos() const;
 

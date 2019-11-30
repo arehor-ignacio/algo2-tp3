@@ -20,7 +20,7 @@ public:
      * Returns the value of the field
      * Time complexity: O(field.size)
      * */
-    Valor operator[](const NombreCampo& field);
+    const Valor& operator[](const NombreCampo& field) const;
 
     bool operator==(const Registro reg) const{
         return this->_register == reg._register;
@@ -39,7 +39,7 @@ public:
      * Defines the value in the designed field
      * Time complexity: O(field.size * value.size)
      * */
-    void definir(NombreCampo field, Valor value);
+    void definir(const NombreCampo& field, const Valor& value);
 private:
     string_map<Valor> _register;
 };
