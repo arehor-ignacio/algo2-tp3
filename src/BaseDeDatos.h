@@ -23,7 +23,7 @@ public:
      * Pre = {_tables.count(tableName) > 0}
      * Time complexity: O(1)
      * */
-    Tabla &obtenerTabla(const NombreTabla &tableName);
+    const Tabla &obtenerTabla(const NombreTabla &tableName) const;
 
     /**
      * Adds a table with tableName as key and table as value

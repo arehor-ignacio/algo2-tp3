@@ -4,8 +4,8 @@ const linear_set<NombreTabla>& BaseDeDatos::tablas() const {
     return _tables.keys();
 }
 
-Tabla &BaseDeDatos::obtenerTabla(const NombreTabla &tableName) {
-    return _tables[tableName];
+const Tabla &BaseDeDatos::obtenerTabla(const NombreTabla &tableName) const {
+    return _tables.at(tableName);
 }
 
 void BaseDeDatos::agregarTabla(const NombreTabla &tableName, Tabla table) {
