@@ -20,7 +20,7 @@ string_map<T> &string_map<T>::operator=(const string_map<T> &d) {
     _destroy(_root);
 
     if (d._root != nullptr) {
-        _root = new Nodo(new T(*(d._root->_def.first)));
+        _root = new Nodo(new T(*(d._root->_def)));
         _size = d._size;
 
         _reCreate(_root, d._root);
@@ -59,14 +59,12 @@ T &string_map<T>::operator[](const string &key) {
             actual = actual->_next[c];
         }
 
-        actual->_def.first = new T();
-
+        actual->_def = new T();
+        actual->_itClave = _keys.fast_insert(key);
         _size++;
+        // actual->_def.second = _getLastIt(_keys.begin(), _keys.end());
 
-        _keys.insert(key);
-        actual->_def.second = _getLastIt(_keys.begin(), _keys.end());
-
-        return *(actual->_def.first);
+        return *(actual->_def);
     } else {
         //Sino lo busco normal
         return at(key);
@@ -88,7 +86,7 @@ int string_map<T>::count(const string &key) const {
         actual = actual->_next[c];
     }
 
-    return actual->_def.first != nullptr;
+    return actual->_def != nullptr;
 }
 
 template<typename T>
@@ -99,7 +97,7 @@ const T &string_map<T>::at(const string &key) const {
         actual = actual->_next[int(c)];
     }
 
-    return *(actual->_def.first);
+    return *(actual->_def);
 }
 
 template<typename T>
@@ -110,7 +108,7 @@ T &string_map<T>::at(const string &key) {
         actual = actual->_next[int(c)];
     }
 
-    return *(actual->_def.first);
+    return *(actual->_def);
 }
 
 template<typename T>
@@ -125,12 +123,12 @@ void string_map<T>::erase(const string &key) {
         actual = actual->_next[int(c)];
     }
 
-    delete actual->_def.first;
-    actual->_def.first = nullptr;
-    _keys.erase(actual->_def.second);
+    delete actual->_def;
+    actual->_def = nullptr;
+    _keys.erase(actual->_itClave);
 
     while (!_hasChild(actual) && !nodeStk.empty()) {
-        delete actual->_def.first;
+        delete actual->_def;
         delete actual;
 
         actual = nodeStk.top();
@@ -156,7 +154,7 @@ template<typename T>
 void string_map<T>::_createRoot() {
     if (size() == 0) {
         _root = new string_map<T>::Nodo();
-        _root->_def.first = new T();
+        _root->_def = new T();
     }
 }
 
@@ -244,6 +242,7 @@ bool string_map<T>::operator==(const string_map toCompare) const {
     return true;
 }
 
+/*
 template<typename T>
 linear_set<string>::iterator
 string_map<T>::_getLastIt(linear_set<string>::iterator begin, linear_set<string>::iterator last) {
@@ -255,4 +254,5 @@ string_map<T>::_getLastIt(linear_set<string>::iterator begin, linear_set<string>
 
     return prior;
 }
+*/
 

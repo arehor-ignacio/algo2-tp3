@@ -5,6 +5,8 @@
 #include <set>
 
 #include "Tipos.h"
+#include "Registro.h"
+#include "BaseDeDatos.h"
 
 using namespace std;
 
@@ -60,6 +62,7 @@ public:
     const Consulta& subconsulta1() const;
     const Consulta& subconsulta2() const;
 
+    linear_set<Registro> procesarConsulta(const BaseDeDatos&);
     ~Consulta();
 
 private:
@@ -80,6 +83,19 @@ private:
 
     void _leer_de(istream&);
     void _destruir();
+
+    /*Procesar Consulta*/
+
+    linear_set<Registro> procesarFrom(const BaseDeDatos&);
+    linear_set<Registro>& procesarSelect(const BaseDeDatos&);
+    linear_set<Registro>& procesarMatch(const BaseDeDatos&);
+    linear_set<Registro>& procesarProj(const BaseDeDatos&);
+    linear_set<Registro>& procesarRename(const BaseDeDatos&);
+    linear_set<Registro>& procesarInter(const BaseDeDatos&);
+    linear_set<Registro>& procesarUnion(const BaseDeDatos&);
+    linear_set<Registro>& procesarProduct(const BaseDeDatos&);
+
+
 
     class Parser {
     public:

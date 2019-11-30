@@ -113,11 +113,14 @@ private:
 
     struct Nodo {
         vector<Nodo *> _next;
-        pair<T *, linear_set<string>::iterator> _def;
+        // pair<T *, linear_set<string>::iterator> _def;
 
-        Nodo() : _next(256, nullptr), _def(nullptr, _template.begin()) {
+        T* _def;
+        linear_set<string>::iterator _itClave;
 
-        };
+        // Nodo() : _next(256, nullptr), _def(nullptr, _template.begin()) {};
+
+        Nodo() : _next(256, nullptr), _def(nullptr) {};
 
         Nodo(T *val) : _next(256, nullptr), _def(val, _template.begin()) {
 
@@ -138,7 +141,7 @@ private:
 
     //This should be defined in linear_set<T>::iterator, but it isn't. We need it get the last it
     //Because of this, the complexity became linear instead of constant. If it was declared in linear_set it would be constant
-    linear_set<string>::iterator _getLastIt(linear_set<string>::iterator begin, linear_set<string>::iterator last);
+    // linear_set<string>::iterator _getLastIt(linear_set<string>::iterator begin, linear_set<string>::iterator last);
 
     Nodo *_root;
     int _size;

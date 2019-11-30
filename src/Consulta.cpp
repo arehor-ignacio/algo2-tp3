@@ -100,6 +100,78 @@ void Consulta::_destruir() {
     }
 }
 
+linear_set<Registro> Consulta::procesarConsulta(const BaseDeDatos& d) {
+    switch(this->tipo_consulta()) {
+        case FROM:
+            return procesarFrom(d);
+        case SELECT:
+            return procesarSelect(d);
+        case MATCH:
+            return procesarMatch(d);
+        case PROJ:
+            return procesarProj(d);
+        case RENAME:
+            return procesarRename(d);
+        case INTER:
+            return procesarInter(d);
+        case UNION:
+            return procesarUnion(d);
+        case PRODUCT:
+            return procesarProduct(d);
+    }
+}
+/* Descripción_ Retorna una copia de los registros de la tabla n en
+ * la base de datos b.
+ * Complejidad: O(k *(Copy(c) + Copy(v)))
+ * Justificación: k es la cantidad de registros, c es el nombre de
+ * campo más largo y v es el valor más largo.
+ */
+linear_set<Registro> Consulta::procesarFrom(const BaseDeDatos& d) {
+    NombreTabla n = this->_nombre_tabla;
+    return d.obtenerTabla(n).registros();
+}
+linear_set<Registro>& Consulta::procesarSelect(const BaseDeDatos& d) {
+    Consulta s = this->subconsulta1();
+    if (s.tipo_consulta() == PRODUCT &&
+        s.subconsulta1().tipo_consulta() == FROM &&
+        s.subconsulta2().tipo_consulta() == FROM &&
+        s.subconsulta1().nombre_tabla() != s.subconsulta2().nombre_tabla() &&
+        d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() == this->campo1()) {
+            return procesarSelectProduct(d);
+    }
+    if (s.tipo_consulta() == SELECT &&
+        s.subconsulta1().tipo_consulta() == FROM &&
+        d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() == this->campo1() &&
+        d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() != this->campo2()) {
+            return procesarSelectSelect(d);
+    }
+    if () {
+        procesarSelectConClave();
+    }
+    else if () {
+
+    }
+    procesarSelectNormal();
+};
+linear_set<Registro>& Consulta::procesarMatch(const BaseDeDatos& d) {
+
+};
+linear_set<Registro>& Consulta::procesarProj(const BaseDeDatos& d) {
+
+};
+linear_set<Registro>& Consulta::procesarRename(const BaseDeDatos& d) {
+
+};
+linear_set<Registro>& Consulta::procesarInter(const BaseDeDatos& d) {
+
+};
+linear_set<Registro>& Consulta::procesarUnion(const BaseDeDatos& d) {
+
+};
+linear_set<Registro>& Consulta::procesarProduct(const BaseDeDatos& d) {
+
+};
+
 Consulta::Parser::Parser(istream& is) : _input(is) {
 }
 
