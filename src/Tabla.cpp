@@ -21,15 +21,15 @@ void Tabla::borrar(Valor keyValue) {
     }
 }
 
-const linear_set<NombreCampo> &Tabla::campos() {
+const linear_set<NombreCampo> &Tabla::campos() const{
     return _valuesByField.keys();
 }
 
-const NombreCampo &Tabla::clave() {
+const NombreCampo &Tabla::clave() const{
     return _key;
 }
 
-const linear_set<Registro> &Tabla::registros() {
+const linear_set<Registro> &Tabla::registros() const{
     return _registers;
 }
 

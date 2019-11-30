@@ -28,11 +28,11 @@ public:
 
     void borrar(Valor keyValue);
 
-    const linear_set<NombreCampo> &campos();
+    const linear_set<NombreCampo> &campos() const;
 
-    const NombreCampo &clave();
+    const NombreCampo &clave() const;
 
-    const linear_set<Registro> &registros();
+    const linear_set<Registro> &registros() const;
 
 private:
     typedef linear_set<Registro>::iterator RegisterIt;
