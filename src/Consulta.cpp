@@ -160,13 +160,51 @@ linear_set<Registro>& Consulta::procesarProj(const BaseDeDatos& d) {
 
 };
 linear_set<Registro>& Consulta::procesarRename(const BaseDeDatos& d) {
+    NombreCampo campo1 = _campo1;
+    NombreCampo campo2 = _campo2;
+    linear_set<Registro> reg_set = _subconsulta1->procesarConsulta(d);
+    auto* res = new linear_set<Registro>;
 
+    for(Registro r : reg_set){
+        Registro nuevo_reg;
+
+        for(NombreCampo c : r.campos()){
+            if(c == campo1){
+                nuevo_reg.definir(campo2, r[c]);
+            } else {
+                nuevo_reg.definir(c, r[c]);
+            }
+        }
+        res->fast_insert(nuevo_reg);
+    }
+    return *res;
 };
 linear_set<Registro>& Consulta::procesarInter(const BaseDeDatos& d) {
+    linear_set<Registro> registros1 = _subconsulta1->procesarConsulta(d);
+    linear_set<Registro> registros2 = _subconsulta2->procesarConsulta(d);
+    auto* res = new linear_set<Registro>;
 
+    for(Registro r1 : registros1){
+        for(Registro r2 : registros2){
+            if(iguales(r1,r2)){
+                res->fast_insert(r1);
+            }
+        }
+    }
+    return *res;
 };
 linear_set<Registro>& Consulta::procesarUnion(const BaseDeDatos& d) {
+    linear_set<Registro> registros1 = _subconsulta1->procesarConsulta(d);
+    linear_set<Registro> registros2 = _subconsulta2->procesarConsulta(d);
+    auto* res = new linear_set<Registro>;
 
+    for(Registro r1 : registros1){
+        res->fast_insert(r1);
+    }
+    for(Registro r2 : registros2){
+        res->insert(r2);
+    }
+    return *res;
 };
 linear_set<Registro>& Consulta::procesarProduct(const BaseDeDatos& d) {
 
@@ -451,3 +489,19 @@ ostream& operator<<(ostream& os, const Consulta& q) {
     return os;
 }
 
+bool Consulta::iguales( Registro r1,  Registro r2) {
+    if(r1.campos().size() != r2.campos().size()){
+        return false;
+    } else {
+        for(const NombreCampo &c : r1.campos()){
+            if(r2.campos().count(c)) {
+                if (r1[c] != r2[c]) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+    return true;
+}

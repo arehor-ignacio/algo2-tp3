@@ -6,6 +6,7 @@
 
 #include "Registro.h"
 #include "Consulta.h"
+#include "BaseDeDatos.h"
 
 typedef vector<Registro> Respuesta;
 
@@ -36,6 +37,10 @@ public:
     void leerDataset(string dataset);
 private:
 
+    BaseDeDatos _bdd;
+
+    linear_set<NombreCampo> vec_to_set(vector<NombreCampo>&);
+    vector<Registro> set_to_vec(linear_set<Registro>&);
     // COMPLETAR con la representación privada.
 
     bool _leerLinea(ifstream& is, vector<string>& valores) const;
