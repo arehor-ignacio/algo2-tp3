@@ -186,8 +186,22 @@ linear_set<Registro>& Consulta::procesarMatch(const BaseDeDatos& d) {
 };
 
 linear_set<Registro>& Consulta::procesarProj(const BaseDeDatos& d) {
+    set<NombreCampo> campos = _conj_campos;
+    linear_set<Registro> registros = _subconsulta1->procesarConsulta(d);
+    auto* res = new linear_set<Registro>;
 
+    for(Registro r : registros){
+        Registro new_reg;
+        for(NombreCampo c : campos){
+            if(r[c] != NULL){       //FORMA DE CHECKEAR DEF??
+                new_reg.definir(c, r[c]);
+            }
+        }
+        res->fast_insert(new_reg);
+    }
+    return *res;
 };
+
 linear_set<Registro>& Consulta::procesarRename(const BaseDeDatos& d) {
     NombreCampo campo1 = _campo1;
     NombreCampo campo2 = _campo2;
