@@ -100,7 +100,7 @@ void Consulta::_destruir() {
     }
 }
 
-linear_set<Registro> Consulta::procesarConsulta(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarConsulta(const BaseDeDatos& d) const{
     switch(this->tipo_consulta()) {
         case FROM:
             return procesarFrom(d);
@@ -130,7 +130,7 @@ linear_set<Registro> Consulta::procesarFrom(const BaseDeDatos& d) {
     NombreTabla n = this->_nombre_tabla;
     return d.obtenerTabla(n).registros();
 }
-linear_set<Registro>& Consulta::procesarSelect(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) {
     Consulta s = this->subconsulta1();
     if (s.tipo_consulta() == PRODUCT &&
         s.subconsulta1().tipo_consulta() == FROM &&
@@ -145,32 +145,104 @@ linear_set<Registro>& Consulta::procesarSelect(const BaseDeDatos& d) {
         d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() != this->campo2()) {
             return procesarSelectSelect(d);
     }
-    if () {
-        procesarSelectConClave();
+    if (s.tipo_consulta() == FROM) {
+        if (d.obtenerTabla(s.nombre_tabla()).clave() == this->campo1())
+            return procesarSelectConClave;
+        else
+            return procesarSelectSinClave;
     }
-    else if () {
+    return procesarSelectBasico();
+};
+linear_set<Registro> Consulta::procesarMatch(const BaseDeDatos& d) {
 
+};
+linear_set<Registro> Consulta::procesarProj(const BaseDeDatos& d) {
+
+};
+linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) {
+    NombreCampo campo1 = _campo1;
+    NombreCampo campo2 = _campo2;
+    linear_set<Registro> rSub = (this->subconsulta1()).procesarConsulta(d);
+    linear_set<Registro> res = linear_set<Registro>();
+
+    for(Registro r : rSub) {
+        Registro tmp = Registro();
+
+        for(NombreCampo c : r.campos()) {
+            if (c == campo1) tmp.definir(campo2, r[c]);
+            else tmp.definir(c, r[c]);
+        }
+        res.fast_insert(tmp);
     }
-    procesarSelectNormal();
+    return res;
 };
-linear_set<Registro>& Consulta::procesarMatch(const BaseDeDatos& d) {
 
-};
-linear_set<Registro>& Consulta::procesarProj(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarInter(const BaseDeDatos& d) {
+    linear_set<Registro> rSub1 = (this->subconsulta1()).procesarConsulta(d);
+    linear_set<Registro> rSub2 = (this->subconsulta2()).procesarConsulta(d);
+    linear_set<Registro> res = linear_set<Registro>();
 
+    for(Registro r1 : rSub1){
+        for(Registro r2 : rSub2){
+            if (r1 == r2) res.fast_insert(r1);
+        }
+    }
+    return res;
 };
-linear_set<Registro>& Consulta::procesarRename(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarUnion(const BaseDeDatos& d) {
+    linear_set<Registro> s1 = (this->subconsulta1()).procesarConsulta(d);
+    linear_set<Registro> s2 = (this->subconsulta2()).procesarConsulta(d);
+    linear_set<Registro> res = linear_set<Registro>();
 
+    for(Registro r1 : s1){
+        res.fast_insert(r1);
+    }
+    for(Registro r2 : s2){
+        res.insert(r2);
+    }
+    return res;
 };
-linear_set<Registro>& Consulta::procesarInter(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarProduct(const BaseDeDatos& d) {
 
-};
-linear_set<Registro>& Consulta::procesarUnion(const BaseDeDatos& d) {
+}
 
-};
-linear_set<Registro>& Consulta::procesarProduct(const BaseDeDatos& d) {
+/* Descripción_ Retorna una copia de los registros de la tabla 'n' cuyo
+ * campo 'k' vale 'v'.
+ * Complejidad: O(Len(n) + Len(k) + Copy(c) + Copy(v))
+ * Justificación: Como 'k' es el campo clave, como mucho hay que copiar
+ * un solo registro. El costo se justifica si 'c' es el nombre de campo
+ * más largo y 'v' es el valor más largo. Tener en cuenta que
+ * Len(k) < Copy(c) ya que copiar un string tiene el mismo costo que
+ * recorrerlo.
+ */
+linear_set<Registro> Consulta::procesarSelectConClave(const BaseDeDatos& d) {
+    NombreTabla nombreTabla = this->subconsulta1().nombre_tabla();
+    return d.obtenerTabla(nombreTabla).regsValorPorCampo(this->campo1(), this->valor());
+}
 
-};
+/* Descripción_ Retorna una copia de los registros de la tabla 'n' cuyo
+ * campo 'c' vale 'v'.
+ * Complejidad: O(Len(n) + Len(c) + k * (Copy(f) + Copy(v)))
+ * Justificación: A diferencia del algoritmo anterior, es posible que
+ * tengamos que devolver más de un registro. Luego si 'k' es la cantidad
+ * de registros cuyo campo 'f' vale 'v', el costo del acceso más el del
+ * copiado es el que calculamos.
+ */
+linear_set<Registro> Consulta::procesarSelectSinClave(const BaseDeDatos& d) {
+    NombreTabla nombreTabla = this->subconsulta1().nombre_tabla();
+    return d.obtenerTabla(nombreTabla).regsValorPorCampo(this->campo1(), this->valor());
+}
+
+linear_set<Registro> Consulta::procesarSelectProduct(const BaseDeDatos& d) {
+    /* Si lo hacemos en el orden inverso, nos ahorramos el producto entre
+     * dos tablas enteras, que es muy costoso.
+     */
+    NombreTabla nombreTabla_1 = this->subconsulta1().subconsulta1().nombre_tabla();
+    NombreTabla nombreTabla_2 = this->subconsulta1().subconsulta2().nombre_tabla();
+    linear_set<Registro> registros2 = d.obtenerTabla(nombreTabla_2).registros();
+    linear_set<Registro>::iterator itRegs1 = d.obtenerTabla(nombreTabla_1).regsValorPorCampo(this->campo1(),this->valor()).begin();
+
+}
 
 Consulta::Parser::Parser(istream& is) : _input(is) {
 }
@@ -450,4 +522,3 @@ ostream& operator<<(ostream& os, const Consulta& q) {
     }
     return os;
 }
-
