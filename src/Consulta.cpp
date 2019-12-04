@@ -154,8 +154,37 @@ linear_set<Registro>& Consulta::procesarSelect(const BaseDeDatos& d) {
     procesarSelectNormal();
 };
 linear_set<Registro>& Consulta::procesarMatch(const BaseDeDatos& d) {
+    auto* res = new linear_set<Registro>;
+    NombreCampo campo1 = _campo1;
+    NombreCampo campo2 = _campo2;
 
+    if(_subconsulta1->tipo_consulta() == PRODUCT){
+        Consulta sub1 = _subconsulta1->subconsulta1();
+        Consulta sub2 = _subconsulta2->subconsulta2();
+
+        if(sub1.tipo_consulta() == FROM && sub2.tipo_consulta() == FROM){
+            NombreTabla t1 = sub1.nombre_tabla();
+            NombreTabla t2 = sub2.nombre_tabla();
+            const Tabla* tabla_1 = &d.obtenerTabla(t1);
+            const Tabla* tabla_2 = &d.obtenerTabla(t2);
+
+            if(t1 != t2 && campo1 == tabla_1->clave() && campo2 == tabla_2->clave()){
+                res = procesarJoin(tabla_1, tabla_2);   //FALTA JOIN
+            }
+        }
+    }
+
+    linear_set<Registro> registros = _subconsulta1->procesarConsulta(d);
+
+    for(Registro r : registros){
+        if(r[campo1] == r[campo2]){
+            res->fast_insert(r);
+        }
+    }
+
+    return *res;
 };
+
 linear_set<Registro>& Consulta::procesarProj(const BaseDeDatos& d) {
 
 };
