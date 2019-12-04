@@ -57,3 +57,14 @@ void Tabla::_eraseRegisterValues(RegisterIt itRegisterToErase) {
         }
     }
 }
+
+linear_set<Registro> Tabla::regsByFieldAndValue(const NombreCampo field, const Valor value) const{
+    linear_set<RegisterIt> registersPtrs = _valuesByField.at(field).at(value);
+    linear_set<Registro> registers = linear_set<Registro>();
+
+    for (RegisterIt regPtr : registersPtrs) {
+        registers.fast_insert(*regPtr);
+    }
+
+    return registers;
+}
