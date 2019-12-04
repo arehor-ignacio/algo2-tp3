@@ -95,7 +95,7 @@ private:
     linear_set<Registro>& procesarUnion(const BaseDeDatos&);
     linear_set<Registro>& procesarProduct(const BaseDeDatos&);
     bool iguales(Registro, Registro);
-
+    Registro& productear(Registro, Registro);
 
 
     class Parser {

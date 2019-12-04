@@ -250,8 +250,27 @@ linear_set<Registro>& Consulta::procesarUnion(const BaseDeDatos& d) {
     return *res;
 };
 linear_set<Registro>& Consulta::procesarProduct(const BaseDeDatos& d) {
+    linear_set<Registro> registros1 = _subconsulta1->procesarConsulta(d);
+    linear_set<Registro> registros2 = _subconsulta2->procesarConsulta(d);
+    auto* res = new linear_set<Registro>;
 
+    for(Registro r1 : registros1){
+        for(Registro r2 : registros2){
+            res->fast_insert(productear(r1,r2));
+        }
+    }
+    return *res;
 };
+
+Registro& Consulta::productear(Registro r1, Registro r2){
+    Registro* new_reg = new Registro();
+    *new_reg = r1;
+
+    for(NombreCampo c : r2.campos()){
+        new_reg->definir(c, r2[c]);
+    }
+    return *new_reg;
+}
 
 Consulta::Parser::Parser(istream& is) : _input(is) {
 }
