@@ -88,13 +88,14 @@ private:
 
     linear_set<Registro> procesarFrom(const BaseDeDatos&);
     linear_set<Registro> procesarSelect(const BaseDeDatos&);
-    linear_set<Registro>& procesarMatch(const BaseDeDatos&);
+    linear_set<Registro> procesarMatch(const BaseDeDatos&);
     linear_set<Registro>& procesarProj(const BaseDeDatos&);
     linear_set<Registro>& procesarRename(const BaseDeDatos&);
     linear_set<Registro>& procesarInter(const BaseDeDatos&);
     linear_set<Registro>& procesarUnion(const BaseDeDatos&);
     linear_set<Registro>& procesarProduct(const BaseDeDatos&);
-
+    bool iguales(Registro, Registro);
+    Registro& productear(Registro, Registro);
 
     /* Procesar Auxiliares */
 

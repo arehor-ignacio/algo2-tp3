@@ -130,6 +130,7 @@ linear_set<Registro> Consulta::procesarFrom(const BaseDeDatos& d) {
     NombreTabla n = this->_nombre_tabla;
     return d.obtenerTabla(n).registros();
 }
+
 linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) {
     Consulta s = this->subconsulta1();
     if (s.tipo_consulta() == PRODUCT &&
@@ -152,13 +153,57 @@ linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) {
             return procesarSelectSinClave;
     }
     return procesarSelectBasico();
-};
+}
+
 linear_set<Registro> Consulta::procesarMatch(const BaseDeDatos& d) {
+    auto* res = new linear_set<Registro>;
+    NombreCampo campo1 = _campo1;
+    NombreCampo campo2 = _campo2;
 
-};
-linear_set<Registro> Consulta::procesarProj(const BaseDeDatos& d) {
+    if(_subconsulta1->tipo_consulta() == PRODUCT){
+        Consulta sub1 = _subconsulta1->subconsulta1();
+        Consulta sub2 = _subconsulta2->subconsulta2();
 
-};
+        if(sub1.tipo_consulta() == FROM && sub2.tipo_consulta() == FROM){
+            NombreTabla t1 = sub1.nombre_tabla();
+            NombreTabla t2 = sub2.nombre_tabla();
+            const Tabla* tabla_1 = &d.obtenerTabla(t1);
+            const Tabla* tabla_2 = &d.obtenerTabla(t2);
+
+            if(t1 != t2 && campo1 == tabla_1->clave() && campo2 == tabla_2->clave()){
+                res = procesarJoin(tabla_1, tabla_2);   //FALTA JOIN
+            }
+        }
+    }
+
+    linear_set<Registro> registros = _subconsulta1->procesarConsulta(d);
+
+    for(Registro r : registros){
+        if(r[campo1] == r[campo2]){
+            res->fast_insert(r);
+        }
+    }
+
+    return *res;
+}
+
+linear_set<Registro>& Consulta::procesarProj(const BaseDeDatos& d) {
+    set<NombreCampo> campos = _conj_campos;
+    linear_set<Registro> registros = _subconsulta1->procesarConsulta(d);
+    auto* res = new linear_set<Registro>;
+
+    for(Registro r : registros){
+        Registro new_reg;
+        for(NombreCampo c : campos){
+            if(r[c] != NULL){       //FORMA DE CHECKEAR DEF??
+                new_reg.definir(c, r[c]);
+            }
+        }
+        res->fast_insert(new_reg);
+    }
+    return *res;
+}
+
 linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) {
     linear_set<Registro> rSub = (this->subconsulta1()).procesarConsulta(d);
     linear_set<Registro> res = linear_set<Registro>();
@@ -173,7 +218,7 @@ linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) {
         res.fast_insert(tmp);
     }
     return res;
-};
+}
 
 linear_set<Registro> Consulta::procesarInter(const BaseDeDatos& d) {
     linear_set<Registro> rSub1 = (this->subconsulta1()).procesarConsulta(d);
@@ -186,22 +231,34 @@ linear_set<Registro> Consulta::procesarInter(const BaseDeDatos& d) {
         }
     }
     return res;
-};
-linear_set<Registro> Consulta::procesarUnion(const BaseDeDatos& d) {
-    linear_set<Registro> s1 = (this->subconsulta1()).procesarConsulta(d);
-    linear_set<Registro> s2 = (this->subconsulta2()).procesarConsulta(d);
-    linear_set<Registro> res = linear_set<Registro>();
+}
 
-    for(Registro r1 : s1){
+linear_set<Registro> Consulta::procesarUnion(const BaseDeDatos& d) {
+    linear_set < Registro > s1 = (this->subconsulta1()).procesarConsulta(d);
+    linear_set < Registro > s2 = (this->subconsulta2()).procesarConsulta(d);
+    linear_set < Registro > res = linear_set < Registro > ();
+
+    for (Registro r1 : s1) {
         res.fast_insert(r1);
     }
-    for(Registro r2 : s2){
+    for (Registro r2 : s2) {
         res.insert(r2);
     }
     return res;
-};
-linear_set<Registro> Consulta::procesarProduct(const BaseDeDatos& d) {
+}
 
+
+linear_set<Registro>& Consulta::procesarProduct(const BaseDeDatos& d) {
+    linear_set < Registro > registros1 = _subconsulta1->procesarConsulta(d);
+    linear_set < Registro > registros2 = _subconsulta2->procesarConsulta(d);
+    auto *res = new linear_set<Registro>;
+
+    for (Registro r1 : registros1) {
+        for (Registro r2 : registros2) {
+            res->fast_insert(productear(r1, r2));
+        }
+    }
+    return *res;
 }
 
 /* Descripción_ Retorna una copia de los registros de la tabla 'n' cuyo
@@ -215,7 +272,7 @@ linear_set<Registro> Consulta::procesarProduct(const BaseDeDatos& d) {
  */
 linear_set<Registro> Consulta::procesarSelectConClave(const BaseDeDatos& d) {
     NombreTabla nombreTabla = this->subconsulta1().nombre_tabla();
-    return d.obtenerTabla(nombreTabla).regsValorPorCampo(this->campo1(), this->valor());
+    return d.obtenerTabla(nombreTabla).regsByFieldAndValue(this->campo1(), this->valor());
 }
 
 /* Descripción_ Retorna una copia de los registros de la tabla 'n' cuyo
@@ -228,7 +285,7 @@ linear_set<Registro> Consulta::procesarSelectConClave(const BaseDeDatos& d) {
  */
 linear_set<Registro> Consulta::procesarSelectSinClave(const BaseDeDatos& d) {
     NombreTabla nombreTabla = this->subconsulta1().nombre_tabla();
-    return d.obtenerTabla(nombreTabla).regsValorPorCampo(this->campo1(), this->valor());
+    return d.obtenerTabla(nombreTabla).regsByFieldAndValue(this->campo1(), this->valor());
 }
 
 linear_set<Registro> Consulta::procesarSelectProduct(const BaseDeDatos& d) {
@@ -238,8 +295,18 @@ linear_set<Registro> Consulta::procesarSelectProduct(const BaseDeDatos& d) {
     NombreTabla nombreTabla_1 = this->subconsulta1().subconsulta1().nombre_tabla();
     NombreTabla nombreTabla_2 = this->subconsulta1().subconsulta2().nombre_tabla();
     linear_set<Registro> registros2 = d.obtenerTabla(nombreTabla_2).registros();
-    linear_set<Registro>::iterator itRegs1 = d.obtenerTabla(nombreTabla_1).regsValorPorCampo(this->campo1(),this->valor()).begin();
+    linear_set<Registro>::iterator itRegs1 = d.obtenerTabla(nombreTabla_1).regsByFieldAndValue(this->campo1(),this->valor()).begin();
 
+}
+
+Registro& Consulta::productear(Registro r1, Registro r2){
+    Registro* new_reg = new Registro();
+    *new_reg = r1;
+
+    for(NombreCampo c : r2.campos()){
+        new_reg->definir(c, r2[c]);
+    }
+    return *new_reg;
 }
 
 Consulta::Parser::Parser(istream& is) : _input(is) {
@@ -484,39 +551,39 @@ static string mostrar_conj(set<string> v) {
 
 ostream& operator<<(ostream& os, const Consulta& q) {
     switch (q.tipo_consulta()) {
-    case FROM:
-        return os << "from(" << q.nombre_tabla() << ")";
-    case SELECT:
-        return os << "select(" << q.subconsulta1()
-                  << ", " << q.campo1()
-                  << ", " << "'" << q.valor() << "'"
-                  << ")";
-    case MATCH:
-        return os << "match(" << q.subconsulta1()
-                  << ", " << q.campo1()
-                  << ", " << q.campo2()
-                  << ")";
-    case PROJ:
-        return os << "proj(" << q.subconsulta1()
-                  << ", " << "{" << mostrar_conj(q.conj_campos()) << "}"
-                  << ")";
-    case RENAME:
-        return os << "rename(" << q.subconsulta1()
-                  << ", " << q.campo1()
-                  << ", " << q.campo2()
-                  << ")";
-    case INTER:
-        return os << "inter(" << q.subconsulta1()
-                  << ", " << q.subconsulta2()
-                  << ")";
-    case UNION:
-        return os << "union(" << q.subconsulta1()
-                  << ", " << q.subconsulta2()
-                  << ")";
-    case PRODUCT:
-        return os << "product(" << q.subconsulta1()
-                  << ", " << q.subconsulta2()
-                  << ")";
+        case FROM:
+            return os << "from(" << q.nombre_tabla() << ")";
+        case SELECT:
+            return os << "select(" << q.subconsulta1()
+                      << ", " << q.campo1()
+                      << ", " << "'" << q.valor() << "'"
+                      << ")";
+        case MATCH:
+            return os << "match(" << q.subconsulta1()
+                      << ", " << q.campo1()
+                      << ", " << q.campo2()
+                      << ")";
+        case PROJ:
+            return os << "proj(" << q.subconsulta1()
+                      << ", " << "{" << mostrar_conj(q.conj_campos()) << "}"
+                      << ")";
+        case RENAME:
+            return os << "rename(" << q.subconsulta1()
+                      << ", " << q.campo1()
+                      << ", " << q.campo2()
+                      << ")";
+        case INTER:
+            return os << "inter(" << q.subconsulta1()
+                      << ", " << q.subconsulta2()
+                      << ")";
+        case UNION:
+            return os << "union(" << q.subconsulta1()
+                      << ", " << q.subconsulta2()
+                      << ")";
+        case PRODUCT:
+            return os << "product(" << q.subconsulta1()
+                      << ", " << q.subconsulta2()
+                      << ")";
     }
     return os;
 }

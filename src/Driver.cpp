@@ -7,15 +7,20 @@
 
 void Driver::crearTabla(NombreTabla tabla, vector<NombreCampo> campos,
                         NombreCampo clave) {
-    COMPLETAR(crearTabla);
+
+    linear_set<NombreCampo> fields = vec_to_set(campos);
+    Tabla t(fields, clave);
+    _bdd.agregarTabla(tabla, t);
 }
 
 void Driver::insertarRegistro(NombreTabla t, Registro r) {
-    COMPLETAR(insertarRegistro);
+    _bdd.agregarRegistro(t,r);
 }
 
 Respuesta Driver::consultar(const Consulta& q) {
-    COMPLETAR(consultar);
+    linear_set<Registro> set = q.procesarConsulta(_bdd);
+    vector<Registro> res = set_to_vec(set);
+    return res;
 }
 
 void Driver::leerDataset(string dataset) {
@@ -61,3 +66,18 @@ bool Driver::_leerLinea(ifstream& is, vector<string>& valores) const {
     return true;
 }
 
+linear_set<NombreCampo> Driver::vec_to_set(vector<NombreCampo> &vec){
+    linear_set<NombreCampo> set;
+    for(NombreCampo n : vec){
+        set.fast_insert(n);
+    }
+    return set;
+}
+
+vector<Registro> Driver::set_to_vec(linear_set<Registro> &set){
+    vector<Registro> vec;
+    for(Registro n : set){
+        vec.push_back(n);
+    }
+    return vec;
+}
