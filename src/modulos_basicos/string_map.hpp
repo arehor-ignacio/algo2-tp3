@@ -226,6 +226,8 @@ void string_map<T>::_assignIterators() {
     }
 }
 
+/* Complejidad: O(n * (Len(c) + Equal(v)))
+ * */
 template<typename T>
 bool string_map<T>::operator==(const string_map toCompare) const {
     if (!(this->_keys == toCompare._keys)) { return false; }

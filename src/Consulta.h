@@ -63,7 +63,7 @@ public:
     const Consulta& subconsulta2() const;
 
     // linear_set<Registro> procesarConsulta(const BaseDeDatos&) const;
-    const linear_set<Registro>& procesarConsulta(const BaseDeDatos&) const;
+    linear_set<Registro> procesarConsulta(const BaseDeDatos&) const;
     ~Consulta();
 
 private:
@@ -87,23 +87,23 @@ private:
 
     /*Procesar Consulta*/
 
-    const linear_set<Registro>& procesarFrom(const BaseDeDatos&) const;
-    linear_set<Registro> procesarSelect(const BaseDeDatos&);
-    linear_set<Registro> procesarMatch(const BaseDeDatos&);
-    const linear_set<Registro> procesarProj(const BaseDeDatos&);
-    linear_set<Registro> procesarRename(const BaseDeDatos&);
-    linear_set<Registro> procesarInter(const BaseDeDatos&);
-    linear_set<Registro> procesarUnion(const BaseDeDatos&);
-    linear_set<Registro> procesarProduct(const BaseDeDatos&);
+    linear_set<Registro> procesarFrom(const BaseDeDatos&) const;
+    linear_set<Registro> procesarSelect(const BaseDeDatos&) const;
+    linear_set<Registro> procesarMatch(const BaseDeDatos&) const;
+    linear_set<Registro> procesarProj(const BaseDeDatos&) const;
+    linear_set<Registro> procesarRename(const BaseDeDatos&) const;
+    linear_set<Registro> procesarInter(const BaseDeDatos&) const;
+    linear_set<Registro> procesarUnion(const BaseDeDatos&) const;
+    linear_set<Registro> procesarProduct(const BaseDeDatos&) const;
 
     /* Procesar Auxiliares */
 
     /* _______SELECT______ */
-    linear_set<Registro> procesarSelectProduct (const BaseDeDatos&);
-    linear_set<Registro> procesarSelectSelect (const BaseDeDatos&);
-    linear_set<Registro> procesarSelectConClave (const BaseDeDatos&);
-    linear_set<Registro> procesarSelectSinClave (const BaseDeDatos&);
-    linear_set<Registro> procesarSelectBasico (const BaseDeDatos&);
+    linear_set<Registro> procesarSelectProduct (const BaseDeDatos&) const;
+    linear_set<Registro> procesarSelectSelect (const BaseDeDatos&) const;
+    linear_set<Registro> procesarSelectConClave (const BaseDeDatos&) const;
+    linear_set<Registro> procesarSelectSinClave (const BaseDeDatos&) const;
+    linear_set<Registro> procesarSelectBasico (const BaseDeDatos&) const;
 
     /* ______PRODUCT_____  */
     Registro pCartesiano(const Registro&, const Registro&) const;

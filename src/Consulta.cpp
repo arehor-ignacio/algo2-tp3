@@ -100,7 +100,7 @@ void Consulta::_destruir() {
     }
 }
 
-const linear_set<Registro>& Consulta::procesarConsulta(const BaseDeDatos& d) const{
+linear_set<Registro> Consulta::procesarConsulta(const BaseDeDatos& d) const{
     switch(this->tipo_consulta()) {
         case FROM:
             return procesarFrom(d);
@@ -120,21 +120,21 @@ const linear_set<Registro>& Consulta::procesarConsulta(const BaseDeDatos& d) con
             return procesarProduct(d);
     }
 }
+
 /* Descripción: Retorna una copia de los registros de la tabla n en
  * la base de datos b.
- * Complejidad: O(k *(Copy(c) + Copy(v)))
- * Justificación: k es la cantidad de registros, c es el nombre de
- * campo más largo y v es el valor más largo.
- */
-
-/* Descripción: Retorna una referencia de los registros de la tabla n en
- * la base de datos b.
- * Complejidad: O(Len(n))
+ * Complejidad: O(Len(n) + k * (Copy(c) + Copy(v)))
  * Justificación: Accedemos al diccionario trie con el nombre de la tabla
  * en cuestión 'n'. Devolvemos una referencia al conjunto de registros de
  * la tabla.
  */
-const linear_set<Registro>& Consulta::procesarFrom(const BaseDeDatos& d) const{
+/* Descripción: Retorna una copia de los registros de la tabla n en
+ * la base de datos b.
+ * Complejidad: O(Len(n) + k *(Copy(c) + Copy(v)))
+ * Justificación: 'k' es la cantidad de registros, 'c' es el nombre de
+ * campo más largo y 'v' es el valor más largo.
+ */
+linear_set<Registro> Consulta::procesarFrom(const BaseDeDatos& d) const{
     NombreTabla n = this->nombre_tabla();
     return d.obtenerTabla(n).registros();
 }
@@ -143,7 +143,7 @@ const linear_set<Registro>& Consulta::procesarFrom(const BaseDeDatos& d) const{
  * Complejidad: O(SELECT)
  * Justificación:.
  */
-linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) const{
     Consulta s = this->subconsulta1();
     if (s.tipo_consulta() == PRODUCT &&
         s.subconsulta1().tipo_consulta() == FROM &&
@@ -160,17 +160,17 @@ linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) {
     }
     if (s.tipo_consulta() == FROM) {
         if (d.obtenerTabla(s.nombre_tabla()).clave() == this->campo1())
-            return procesarSelectConClave;
+            return procesarSelectConClave(d);
         else
-            return procesarSelectSinClave;
+            return procesarSelectSinClave(d);
     }
-    return procesarSelectBasico();
+    return procesarSelectBasico(d);
 }
 
-linear_set<Registro> Consulta::procesarMatch(const BaseDeDatos& d) {
-    auto* res = new linear_set<Registro>;
-    NombreCampo campo1 = _campo1;
-    NombreCampo campo2 = _campo2;
+linear_set<Registro> Consulta::procesarMatch(const BaseDeDatos& d) const{
+    NombreCampo campo1 = this->campo1();
+    NombreCampo campo2 = this->campo2();
+    linear_set<Registro> res = linear_set<Registro>();
 
     if(_subconsulta1->tipo_consulta() == PRODUCT){
         Consulta sub1 = _subconsulta1->subconsulta1();
@@ -192,88 +192,114 @@ linear_set<Registro> Consulta::procesarMatch(const BaseDeDatos& d) {
 
     for(Registro r : registros){
         if(r[campo1] == r[campo2]){
-            res->fast_insert(r);
+            res.fast_insert(r);
         }
     }
 
-    return *res;
+    return res;
 }
 
-/* Descripción: Devuelve el conjunto de registros en la intersección
- * de las dos subconsultas.
- * Complejidad: O(Q + )
- * Coplejidad Caso Típico: O (ASDA)
- * Justificación:
+/* Descripción: Devuelve una copia de la proyección del conjunto de
+ * registros resultante de la subconsulta1.
+ * Complejidad: O(Q + n * k * (Len(c) + Copy(c) + Copy(v)))
+ * Justificación: Sea 'Q' el costo de procesar la subconsulta1 copiando
+ * los registros resultantes. Tenemos que, para cada registro resultante
+ * de la subconsulta1, 'n' en total, recorrer el conjunto de campos
+ * (siendo 'k' el tamaño del mismo), e ir fijandonos si ese campo está
+ * definido o no. El costo de esto último es O(Len(c)) donde 'c' es el
+ * nombre del campo de mayor longitud. Si está definido, debemos copiarlo
+ * en el registro proyectado, cuyo costo es O(Len(c) + Copy(v)) donde 'v'
+ * es el valor de mayor tamaño.
  */
-const linear_set<Registro> Consulta::procesarProj(const BaseDeDatos& d) {
-    set<NombreCampo> campos = this->conj_campos(); // Copy
-    linear_set<Registro> rQuery = this->subconsulta1().procesarConsulta(d); // Copy
-    linear_set<Registro> res = linear_set<Registro>();
+linear_set<Registro> Consulta::procesarProj(const BaseDeDatos& d) const{
+    set<NombreCampo> campos = this->conj_campos();                          /* O (k * Copy(c)) */
+    linear_set<Registro> rQuery = this->subconsulta1().procesarConsulta(d); /* O(Q) */
+    linear_set<Registro> res = linear_set<Registro>();                      /* O(1) */
 
-    for (const Registro& r : rQuery){
+    for (const Registro& r : rQuery) {          /* O(n) */
         Registro tmp = Registro();
 
-        for (NombreCampo c : campos) {
-            if(r.def(c)) tmp.definir(c, r[c]);
+        for (const NombreCampo& c : campos) {   /* O(k) */
+            if(r.def(c)) tmp.definir(c, r[c]);  /* O(Len(c) + Copy(v)) */
         }
-        res.fast_insert(tmp);
+        res.fast_insert(tmp);                   /* O(Len(c) + Copy(v)) */
+    }
+    return res;
+}
+
+/* Descripción: Devuelve por copia el conjunto de registros
+ * resultantes de la subconsulta1 donde se renombró el
+ * campo1 por campo2.
+ * Complejidad: O(Q + n * (Equal(c) + Len(c) + Copy(v)))
+ * Justificación: Si el costo de procesar la subconsulta1 es 'Q',
+ * luego solo hay que considerar el costo de ir recorriendo el
+ * conjunto de campos de cada registro, comparar si es el
+ * campo a renombrar o no (O(Equal(c)), y en ambos casos realizar
+ * una definición sobre el registro a devolver. Siendo el costo de
+ * esto último O(Len(c) + Copy(v)) donde 'c' es el campo de mayor
+ * longitud de todos los 'n' registros, y 'v' el valor de mayor tamaño.
+ * Nota: El costo de la definición varía según si es el campo a
+ * renombrar o no, en cuyo caso debería ser O(Len(c2) + Copy(v)), y
+ * luego la complejidad del ciclo entero debería ser
+ * O(Max(Len(c), Len(c2)) + Copy(v)). Para hacer los comentarios
+ * mas legibles lo simplificamos en el valor que está.
+ */
+linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) const{
+    linear_set<Registro> rQuery = (this->subconsulta1()).procesarConsulta(d); /* O(Q) */
+    linear_set<Registro> res = linear_set<Registro>();
+
+    for (const Registro& r : rQuery) {                  /* O(n) */
+        Registro tmp = Registro();
+
+        for(NombreCampo c : r.campos()) {               /* O(k) - k: Cte. */
+            if (c == this->campo1()) {                  /* O(Equal(c)) */
+                tmp.definir(this->campo2(), r[c]);/* O(Len(c) + Copy(v)) */
+            }
+            else tmp.definir(c, r[c]);                  /* O(Len(c) + Copy(v)) */
+        }
+        res.fast_insert(tmp);                           /* O(Len(c) + Copy(v)) */
     }
     return res;
 }
 
 /* Descripción: Devuelve el conjunto de registros en la intersección
  * de las dos subconsultas.
- * Complejidad: O(Q + )
- * Justificación:
+ * Complejidad: O(Q + n1 * n2 * k * (Len(c) + Copy(v)))
+ * Justificación: Sean 'n1' y 'n2' la cantidad de registros resultantes
+ * de las subconsultas, cuyo procesamiento cuesta O(Q), Entonces el
+ * costo de devolver la intersección de estos conjuntos se reduce a
+ * ver si dos registros son iguales. El costo de esta comparacioón es el
+ * mismo al de comparar dos diccionarios trie, hay que recorrer las 'k'
+ * claves, y viendo si al acceder a estas los valores son iguales.
  */
-linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) {
-    linear_set<Registro> rQuery = (this->subconsulta1()).procesarConsulta(d);
-    linear_set<Registro> res = linear_set<Registro>();
-
-    for(Registro r : rQuery) {
-        Registro tmp = Registro();
-
-        for(NombreCampo c : r.campos()) {
-            if (c == this->campo1()) tmp.definir(this->campo2(), r[c]);
-            else tmp.definir(c, r[c]);
-        }
-        res.fast_insert(tmp);
-    }
-    return res;
-}
-
-/* Descripción: Devuelve el conjunto de registros en la intersección
- * de las dos subconsultas.
- * Complejidad: O(Q + )
- * Justificación:
- */
-linear_set<Registro> Consulta::procesarInter(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarInter(const BaseDeDatos& d) const{
     linear_set<Registro> rQuery1 = (this->subconsulta1()).procesarConsulta(d);
     linear_set<Registro> rQuery2 = (this->subconsulta2()).procesarConsulta(d);
     linear_set<Registro> res = linear_set<Registro>();
 
-    for(Registro r1 : rQuery1){
-        for(Registro r2 : rQuery2){
-            if (r1 == r2) res.fast_insert(r1);
+    for (const Registro& r1 : rQuery1) {        /* O(n1) */
+        for (const Registro& r2 : rQuery2) {    /* O(n2) */
+            if (r1 == r2) res.fast_insert(r1);  /* O(k * (Len(c) + Equal(v))) */
         }
     }
     return res;
 }
 
-/* Descripción:.
+/* Descripción: Devuelve la union entre los registros resultantes de las
+ * subconsultas especificadas.
  * Complejidad: O(Q + )
  * Justificación:
  */
-linear_set<Registro> Consulta::procesarUnion(const BaseDeDatos& d) {
-    linear_set < Registro > rQuery1 = (this->subconsulta1()).procesarConsulta(d);
-    linear_set < Registro > rQuery2 = (this->subconsulta2()).procesarConsulta(d);
-    linear_set < Registro > res = linear_set <Registro> ();
+linear_set<Registro> Consulta::procesarUnion(const BaseDeDatos& d) const{
+    linear_set<Registro> rQuery1 = (this->subconsulta1()).procesarConsulta(d);
+    linear_set<Registro> rQuery2 = (this->subconsulta2()).procesarConsulta(d);
+    linear_set<Registro> res = linear_set<Registro>();
 
-    for (Registro r1 : rQuery1) {
-        res.fast_insert(r1);
+    for (const Registro& r1 : rQuery1) {   /* O(n) */
+        res.fast_insert(r1);               /* O(Len(c) + Copy(v)) */
     }
-    for (Registro r2 : rQuery2) {
-        res.insert(r2);
+    for (const Registro& r2 : rQuery2) {   /* O(n) */
+        res.insert(r2);                    /* O(Len(c) + Copy(v) + k * (Len(c) + Equal(v))) */
     }
     return res;
 }
@@ -282,9 +308,9 @@ linear_set<Registro> Consulta::procesarUnion(const BaseDeDatos& d) {
  * Complejidad: O(Len(c) + Copy(v))
  * Justificación:
  */
-linear_set<Registro> Consulta::procesarProduct(const BaseDeDatos& d) {
-    linear_set <Registro> rQuery1 = this->subconsulta1().procesarConsulta(d);
-    linear_set <Registro> rQuery2 = this->subconsulta2().procesarConsulta(d);
+linear_set<Registro> Consulta::procesarProduct(const BaseDeDatos& d) const{
+    linear_set<Registro> rQuery1 = this->subconsulta1().procesarConsulta(d);
+    linear_set<Registro> rQuery2 = this->subconsulta2().procesarConsulta(d);
     linear_set<Registro> res = linear_set<Registro>();
 
     for (const Registro& r1 : rQuery1) {
@@ -304,7 +330,7 @@ linear_set<Registro> Consulta::procesarProduct(const BaseDeDatos& d) {
  * Len(k) < Copy(c) ya que copiar un string tiene el mismo costo que
  * recorrerlo.
  */
-linear_set<Registro> Consulta::procesarSelectConClave(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarSelectConClave(const BaseDeDatos& d) const{
     NombreTabla nombreTabla = this->subconsulta1().nombre_tabla();
     return d.obtenerTabla(nombreTabla).regsByFieldAndValue(this->campo1(), this->valor());
 }
@@ -317,7 +343,7 @@ linear_set<Registro> Consulta::procesarSelectConClave(const BaseDeDatos& d) {
  * de registros cuyo campo 'f' vale 'v', el costo del acceso más el del
  * copiado es el que calculamos.
  */
-linear_set<Registro> Consulta::procesarSelectSinClave(const BaseDeDatos& d) {
+linear_set<Registro> Consulta::procesarSelectSinClave(const BaseDeDatos& d) const{
     NombreTabla nombreTabla = this->subconsulta1().nombre_tabla();
     return d.obtenerTabla(nombreTabla).regsByFieldAndValue(this->campo1(), this->valor());
 }
@@ -326,33 +352,41 @@ linear_set<Registro> Consulta::procesarSelectSinClave(const BaseDeDatos& d) {
  * Complejidad: O(Len(c) + Copy(v))
  * Justificación:
  */
-linear_set<Registro> Consulta::procesarSelectProduct(const BaseDeDatos& d) {
-    /* Si lo hacemos en el orden inverso, nos ahorramos el producto entre
-     * dos tablas enteras, que es muy costoso.
-     */
-
-    // sKey = < (key = v) >
-    NombreTabla t1 = this->subconsulta1().subconsulta1().nombre_tabla();                /* O(1)                 */
+linear_set<Registro> Consulta::procesarSelectProduct(const BaseDeDatos& d) const{
+    NombreTabla t1 = this->subconsulta1().subconsulta1().nombre_tabla();
     linear_set<Registro> sKey =
-    d.obtenerTabla(t1).regsByFieldAndValue(this->campo1(), this->valor());  /* O(Len(c) + Len(v) +  */
+    d.obtenerTabla(t1).regsByFieldAndValue(this->campo1(), this->valor());  /* O(Len(n) + Len(c) + Len(v)) */
 
-    linear_set<Registro>::const_iterator itKey = sKey.begin();                          /* O(1)                 */
-
-    // qSub = FROM (d, t2)
+    linear_set<Registro>::const_iterator itKey = sKey.begin();                          /* O(1) */
     Consulta qSub = this->subconsulta1().subconsulta2();
-    linear_set<Registro> rQuery = qSub.procesarConsulta(d);                             /* O()                 */
-
-    // linear_set<Registro>::const_iterator itReg =  d.obtenerTabla(t1).
-    // regsByFieldAndValue(this->campo1(),this->valor()).begin();
+    linear_set<Registro> rQuery = qSub.procesarConsulta(d);                             /* O(Q) */
 
     linear_set<Registro> res = linear_set<Registro>();
 
-    for (Registro r : rQuery) {                                                        /* O()                 */
-        res.fast_insert(pCartesiano(*itKey, r));
+    for (Registro r : rQuery) {                         /* O(n2) */
+        res.fast_insert(pCartesiano(*itKey, r));     /* O(Len(c) + Copy(v)) */
     }
 
     return res;
 }
+
+/* Descripción:
+ * Complejidad: O(n * (Len(c) + Equal(v) + Copy(v)))
+ * Justificación:
+ */
+linear_set<Registro> Consulta::procesarSelectBasico(const BaseDeDatos& d) const {
+    linear_set<Registro> rQuery = this->subconsulta1().procesarConsulta(d);
+    linear_set<Registro> res = linear_set<Registro>();
+
+    for (const Registro& r : rQuery) {              /* O(n) */
+        if (r[this->campo1()] == this->valor()) {   /* O(Len(c) + Equal(v)) */
+            res.fast_insert(r);                     /* O(Len(c) + Copy(v))*/
+        }
+    }
+
+    return res;
+}
+
 
 /* Descripción: Devuelve el registro resultante de hacer el producto
  * cartesiano entre 'r1' y 'r2'.
@@ -363,10 +397,10 @@ linear_set<Registro> Consulta::procesarSelectProduct(const BaseDeDatos& d) {
  * valor más grande 'v'.
  */
 Registro Consulta::pCartesiano(const Registro& r1, const Registro& r2) const{
-    Registro reg = r1;                          /* O(1)                 */
+    Registro reg = r1;                          /* O(1) */
 
-    for (NombreCampo c : r2.campos()) {         /* O(k) - k : Cte.      */
-        reg.definir(c, r2[c]);                  /* O(Len(c) + Copy(v))  */
+    for (const NombreCampo& c : r2.campos()) {  /* O(k) - k : Cte. */
+        reg.definir(c, r2[c]);                  /* O(Len(c) + Copy(v)) */
     }
     return reg;
 }
