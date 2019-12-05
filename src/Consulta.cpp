@@ -160,8 +160,6 @@ linear_set<Registro> Consulta::procesarProj(const BaseDeDatos& d) {
 
 };
 linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) {
-    NombreCampo campo1 = _campo1;
-    NombreCampo campo2 = _campo2;
     linear_set<Registro> rSub = (this->subconsulta1()).procesarConsulta(d);
     linear_set<Registro> res = linear_set<Registro>();
 
@@ -169,7 +167,7 @@ linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) {
         Registro tmp = Registro();
 
         for(NombreCampo c : r.campos()) {
-            if (c == campo1) tmp.definir(campo2, r[c]);
+            if (c == this->campo1()) tmp.definir(this->campo2(), r[c]);
             else tmp.definir(c, r[c]);
         }
         res.fast_insert(tmp);
