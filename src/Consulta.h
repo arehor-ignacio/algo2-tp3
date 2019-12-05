@@ -62,7 +62,8 @@ public:
     const Consulta& subconsulta1() const;
     const Consulta& subconsulta2() const;
 
-    linear_set<Registro> procesarConsulta(const BaseDeDatos&) const;
+    // linear_set<Registro> procesarConsulta(const BaseDeDatos&) const;
+    const linear_set<Registro>& procesarConsulta(const BaseDeDatos&) const;
     ~Consulta();
 
 private:
@@ -86,25 +87,26 @@ private:
 
     /*Procesar Consulta*/
 
-    linear_set<Registro> procesarFrom(const BaseDeDatos&);
+    const linear_set<Registro>& procesarFrom(const BaseDeDatos&) const;
     linear_set<Registro> procesarSelect(const BaseDeDatos&);
     linear_set<Registro> procesarMatch(const BaseDeDatos&);
-    linear_set<Registro>& procesarProj(const BaseDeDatos&);
-    linear_set<Registro>& procesarRename(const BaseDeDatos&);
-    linear_set<Registro>& procesarInter(const BaseDeDatos&);
-    linear_set<Registro>& procesarUnion(const BaseDeDatos&);
-    linear_set<Registro>& procesarProduct(const BaseDeDatos&);
-    bool iguales(Registro, Registro);
-    Registro& productear(Registro, Registro);
+    const linear_set<Registro> procesarProj(const BaseDeDatos&);
+    linear_set<Registro> procesarRename(const BaseDeDatos&);
+    linear_set<Registro> procesarInter(const BaseDeDatos&);
+    linear_set<Registro> procesarUnion(const BaseDeDatos&);
+    linear_set<Registro> procesarProduct(const BaseDeDatos&);
 
     /* Procesar Auxiliares */
 
-    // == SELECT == //
+    /* _______SELECT______ */
     linear_set<Registro> procesarSelectProduct (const BaseDeDatos&);
     linear_set<Registro> procesarSelectSelect (const BaseDeDatos&);
     linear_set<Registro> procesarSelectConClave (const BaseDeDatos&);
     linear_set<Registro> procesarSelectSinClave (const BaseDeDatos&);
     linear_set<Registro> procesarSelectBasico (const BaseDeDatos&);
+
+    /* ______PRODUCT_____  */
+    Registro pCartesiano(const Registro&, const Registro&) const;
 
 
 
