@@ -34,6 +34,8 @@ public:
 
     const linear_set<Registro> &registros() const;
 
+    linear_set<Registro> regsByFieldAndValue(const NombreCampo field, const Valor value) const;
+
 private:
     typedef linear_set<Registro>::iterator RegisterIt;
     typedef linear_set<RegisterIt> RegisterValue;
