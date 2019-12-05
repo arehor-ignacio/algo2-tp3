@@ -20,12 +20,17 @@ public:
      * Returns the value of the field
      * Time complexity: O(field.size)
      * */
-    Valor& operator[](const NombreCampo& field);
+    Valor& operator[](const NombreCampo&);
+
+    const Valor& operator[](const NombreCampo&) const;
 
     bool operator==(const Registro reg) const{
         return this->_register == reg._register;
     }
 
+    Registro& operator=(const Registro&);
+
+    bool def(const NombreCampo&) const;
 
     /**
      * Returns a list with all the fields of the register
