@@ -29,7 +29,7 @@ const NombreCampo &Tabla::clave() const{
     return _key;
 }
 
-const linear_set<Registro> &Tabla::registros() const{
+const linear_set<Registro>& Tabla::registros() const{
     return _registers;
 }
 
