@@ -153,6 +153,7 @@ linear_set<Registro>& Consulta::procesarSelect(const BaseDeDatos& d) {
     }
     procesarSelectNormal();
 };
+
 linear_set<Registro>& Consulta::procesarMatch(const BaseDeDatos& d) {
     auto* res = new linear_set<Registro>;
     NombreCampo campo1 = _campo1;
@@ -222,6 +223,7 @@ linear_set<Registro>& Consulta::procesarRename(const BaseDeDatos& d) {
     }
     return *res;
 };
+
 linear_set<Registro>& Consulta::procesarInter(const BaseDeDatos& d) {
     linear_set<Registro> registros1 = _subconsulta1->procesarConsulta(d);
     linear_set<Registro> registros2 = _subconsulta2->procesarConsulta(d);
@@ -236,6 +238,7 @@ linear_set<Registro>& Consulta::procesarInter(const BaseDeDatos& d) {
     }
     return *res;
 };
+
 linear_set<Registro>& Consulta::procesarUnion(const BaseDeDatos& d) {
     linear_set<Registro> registros1 = _subconsulta1->procesarConsulta(d);
     linear_set<Registro> registros2 = _subconsulta2->procesarConsulta(d);
@@ -249,6 +252,7 @@ linear_set<Registro>& Consulta::procesarUnion(const BaseDeDatos& d) {
     }
     return *res;
 };
+
 linear_set<Registro>& Consulta::procesarProduct(const BaseDeDatos& d) {
     linear_set<Registro> registros1 = _subconsulta1->procesarConsulta(d);
     linear_set<Registro> registros2 = _subconsulta2->procesarConsulta(d);
