@@ -120,10 +120,9 @@ private:
 
         // Nodo() : _next(256, nullptr), _def(nullptr, _template.begin()) {};
 
-        Nodo() : _next(256, nullptr), _def(nullptr) {};
+        Nodo() : _next(256, nullptr), _def(nullptr), _itClave(_template.begin()){};
 
-        Nodo(T *val) : _next(256, nullptr), _def(val, _template.begin()) {
-
+        Nodo(T *val) : _next(256, nullptr), _def(val), _itClave(_template.begin()) {
         };
 
         Nodo(T *val, linear_set<string>::iterator it) : _next(256, nullptr), _def(val, it) {};

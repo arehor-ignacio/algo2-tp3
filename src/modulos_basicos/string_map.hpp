@@ -5,14 +5,11 @@ template<typename T>
 linear_set<string> string_map<T>::_template = linear_set<string>();
 
 template<typename T>
-string_map<T>::string_map() {
-    _root = nullptr;
-    _size = 0;
-    _keys = linear_set<string>();
+string_map<T>::string_map() : _root(nullptr), _size(0), _keys(linear_set<string>()){
 };
 
 template<typename T>
-string_map<T>::string_map(const string_map<T> &toCopy)
+string_map<T>::string_map(const string_map<T>& toCopy)
         : string_map() { *this = toCopy; }
 
 template<typename T>
@@ -171,7 +168,7 @@ bool string_map<T>::_hasChild(string_map::Nodo *node) {
 template<typename T>
 void string_map<T>::_destroy(Nodo *node) {
     if (node != nullptr) {
-        delete node->_def.first;
+        delete node->_def;
 
         for (Nodo *next : node->_next) {
             if (next != nullptr) {
@@ -188,9 +185,9 @@ void string_map<T>::_reCreate(Nodo *node, Nodo *nodeToCopy) {
         Nodo *next = nodeToCopy->_next[i];
         if (next != nullptr) {
             Nodo *child;
-            if (next->_def.first != nullptr) {
+            if (next->_def != nullptr) {
                 T *definition = new T();
-                *definition = *(next->_def.first);
+                *definition = *(next->_def);
                 child = new Nodo(definition);
             } else {
                 child = new Nodo();
@@ -221,7 +218,7 @@ void string_map<T>::_assignIterators() {
             actual = actual->_next[int(c)];
         }
 
-        actual->_def.second = it;
+        actual->_itClave = it;
         ++it;
     }
 }

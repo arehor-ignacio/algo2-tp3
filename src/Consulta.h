@@ -98,15 +98,20 @@ private:
 
     /* Procesar Auxiliares */
 
-    /* _______SELECT______ */
+    /* SELECT */
     linear_set<Registro> procesarSelectProduct (const BaseDeDatos&) const;
     linear_set<Registro> procesarSelectSelect (const BaseDeDatos&) const;
     linear_set<Registro> procesarSelectConClave (const BaseDeDatos&) const;
     linear_set<Registro> procesarSelectSinClave (const BaseDeDatos&) const;
     linear_set<Registro> procesarSelectBasico (const BaseDeDatos&) const;
 
-    /* ______PRODUCT_____  */
+    /* PRODUCT */
     Registro pCartesiano(const Registro&, const Registro&) const;
+
+    /* MATCH */
+    linear_set<Registro> procesarJoin(const Tabla&, const Tabla&) const;
+    linear_set<Registro> procesarMatchBasico(const BaseDeDatos&) const;
+
 
 
 
@@ -144,6 +149,7 @@ private:
         istream& _input;
         string _contexto;
     };
+
 };
 
 ostream& operator<<(ostream&, const Consulta&);
