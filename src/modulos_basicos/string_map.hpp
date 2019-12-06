@@ -38,19 +38,25 @@ void string_map<T>::eliminarNodo(string_map::Nodo* nodoTrie) {
 /* Complejidad: O(n + Len(k) + Copy(v)) */
 template <typename T>
 T& string_map<T>::operator[](const string& clave){
+    bool flag = false;
     if (this->_raiz == nullptr) {
         this->_raiz = new Nodo();
     }
     struct Nodo* nodoTrie = this->_raiz;
 
-    for (int i = 0; i < clave.size(); ++i) {
-        if (nodoTrie->siguientes[clave[i]] == nullptr) {
-            nodoTrie->siguientes[clave[i]] = new Nodo();
+    for (int i = 0; i < (int) clave.size(); ++i) {
+        if (nodoTrie->siguientes[(int)clave[i]] == nullptr) {
+            nodoTrie->siguientes[(int)clave[i]] = new Nodo();
+            flag = true;
         }
-        nodoTrie = nodoTrie->siguientes[clave[i]];
+        nodoTrie = nodoTrie->siguientes[(int)clave[i]];
     }
 
-    //nodoTrie->itClave = this->_keys.insert(clave).first;
+    if (flag) {
+        nodoTrie->itClave = this->_keys.insert(clave).first;
+    }
+    // nodoTrie->itClave = this->_keys.insert(clave).first;
+    // this->_keys.insert(clave);
     nodoTrie->esFinDePalabra = true;
     return *(nodoTrie->definicion);
 }
@@ -74,8 +80,8 @@ template <typename T>
 const T& string_map<T>::at(const string& clave) const {
     struct Nodo* nodoTrie = this->_raiz;
 
-    for (int i = 0; i < clave.size(); ++i) {
-        nodoTrie = nodoTrie->siguientes[clave[i]];
+    for (int i = 0; i < (int) clave.size(); ++i) {
+        nodoTrie = nodoTrie->siguientes[(int)clave[i]];
     }
     return *(nodoTrie->definicion);
 }
@@ -86,8 +92,8 @@ template <typename T>
 T& string_map<T>::at(const string& clave) {
     struct Nodo* nodoTrie = this->_raiz;
 
-    for (int i = 0; i < clave.size(); ++i) {
-        nodoTrie = nodoTrie->siguientes[clave[i]];
+    for (int i = 0; i < (int)clave.size(); ++i) {
+        nodoTrie = nodoTrie->siguientes[(int)clave[i]];
     }
     return *(nodoTrie->definicion);
 }
@@ -102,20 +108,20 @@ void string_map<T>::erase(const string& clave) {
 
 template<typename T>
 typename string_map<T>::Nodo* string_map<T>::removerNodo(string_map::Nodo*& nodoTrie, const string& clave, int index) {
-    if (index == clave.size()) {
+    if (index == (int) clave.size()) {
         if ((*nodoTrie).esHoja()) {
-            //this->_keys.erase(nodoTrie->itClave);
+            this->_keys.erase(nodoTrie->itClave);
             delete nodoTrie->definicion;
             delete nodoTrie;
             return nullptr;
         } else {
-            //this->_keys.erase(nodoTrie->itClave);
+            this->_keys.erase(nodoTrie->itClave);
             //delete nodoTrie->definicion;
             nodoTrie->esFinDePalabra = false;
             return nodoTrie;
         }
     } else {
-        nodoTrie->siguientes[clave[index]] = removerNodo(nodoTrie->siguientes[clave[index]], clave, index+1);
+        nodoTrie->siguientes[(int)clave[index]] = removerNodo(nodoTrie->siguientes[(int)clave[index]], clave, index+1);
         if (!nodoTrie->esFinDePalabra && nodoTrie->esHoja()){
             //this->_keys.erase(nodoTrie->itClave);
             delete nodoTrie->definicion;

@@ -84,12 +84,12 @@ bool Consulta::operator==(const Consulta& otra) {
     assert(false);
 }
 
-Consulta::Consulta(const Consulta& otra) {
+/*Consulta::Consulta(const Consulta& otra) {
     // Constructor por copia NO IMPLEMENTADO.
     //
     // Si lo necesitan, deben implementarlo.
     assert(false);
-}
+}*/
 
 void Consulta::_destruir() {
     if (_subconsulta1 != NULL) {

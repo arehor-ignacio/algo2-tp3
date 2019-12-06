@@ -47,7 +47,8 @@ void Driver::leerDataset(string dataset) {
         }
         Registro r;
         for (size_t i = 0; i < campos.size(); i++) {
-            r[campos[i]] = valores[i];
+            //r[campos[i]] = valores[i]; SE PUEDE??? SI NO SE PUEDE, HAY QUE CAMBIAR OPERADOR[] DE REGISTRO
+            r.definir(campos[i], valores[i]);
         }
         insertarRegistro(dataset, r);
     }

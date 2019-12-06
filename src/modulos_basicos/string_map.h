@@ -96,7 +96,7 @@ private:
         Nodo *siguientes[256];
         T *definicion;
         bool esFinDePalabra;
-        //set<string>::iterator itClave;
+        set<string>::iterator itClave;
 
         Nodo() : definicion(new T()), esFinDePalabra(false){
             for (int i = 0; i < 256; ++i) {

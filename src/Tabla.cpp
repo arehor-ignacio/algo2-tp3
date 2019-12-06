@@ -8,13 +8,14 @@ Tabla::Tabla(const NombreCampo& k, const std::set<NombreCampo>& campos) : _clave
 }
 /* Complejidad: O(Len(c) + Len(v) + n)*/
 void Tabla::insertar(const Registro& r) {
-    if (this->claveDefinida(r.operator[](this->clave()))) {
-        borrar(r.operator[](this->clave()));
+    Valor vClave = r[this->clave()];
+    if (this->claveDefinida(vClave)) {
+        borrar(vClave);
     }
 
     ItRegistro it = this->_registros.fast_insert(r);
     for (NombreCampo c : r.campos()) {
-        this->_valoresPorCampo.at(c).at(r[c]).fast_insert(it);
+        this->_valoresPorCampo.at(c)[r[c]].fast_insert(it);
     }
 }
 /* Pre: claveDefinida(v) */
@@ -38,7 +39,8 @@ linear_set<Registro> Tabla::registrosValorEnCampo(const NombreCampo& c, const Va
 }
 /* Complejidad: O(Len(c) + Len(v) + n *(Len(c) + Copy(v))) */
 bool Tabla::claveDefinida(const Valor& v) const {
-    return registrosValorEnCampo(this->clave(), v).size() == 1;
+//    return registrosValorEnCampo(this->clave(), v).size() == 1;
+    return this->_valoresPorCampo.at(this->clave()).count(v) == 1;
 }
 /* Pre: claveDefinida(v) */
 /* Complejidad: O(Len(c) + Len(v)) */

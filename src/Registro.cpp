@@ -10,6 +10,7 @@ set<NombreCampo> Registro::campos() const {
 /* Complejidad: O(Len(c)) */
 Valor& Registro::operator[](const NombreCampo& campo){
     return this->_registro.at(campo);
+    //return this->_registro[campo];
 }
 /* Complejidad: O(Len(c)) */
 const Valor& Registro::operator[](const NombreCampo& campo) const {

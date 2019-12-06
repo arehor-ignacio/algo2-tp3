@@ -79,7 +79,7 @@ private:
 
     // Operador de asignación y constructor por copia no implementados.
     bool operator==(const Consulta&);
-    Consulta(const Consulta&);
+    //Consulta(const Consulta&);
 
     // void _leer_de(istream&);     No se usa nunca ni esta implementado
 
