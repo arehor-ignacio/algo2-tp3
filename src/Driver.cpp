@@ -7,19 +7,20 @@
 
 void Driver::crearTabla(NombreTabla tabla, vector<NombreCampo> campos,
                         NombreCampo clave) {
+    std::set<NombreCampo> f = std::set<NombreCampo>();
+    std::copy(campos.begin(), campos.end(), std::inserter(f, f.end()));
 
-    linear_set<NombreCampo> fields = vec_to_set(campos);
-    Tabla t(fields, clave);
-    _bdd.agregarTabla(tabla, t);
+    this->_baseDeDatos.agregarTabla(tabla, Tabla(clave, f));
 }
 
 void Driver::insertarRegistro(NombreTabla t, Registro r) {
-    _bdd.agregarRegistro(t,r);
+    this->_baseDeDatos.agregarRegistro(t, r);
 }
 
 Respuesta Driver::consultar(const Consulta& q) {
-    linear_set<Registro> set = q.procesarConsulta(_bdd);
-    vector<Registro> res = set_to_vec(set);
+    std::vector<Registro> res = std::vector<Registro>();
+    linear_set<Registro> rQuery = q.procesarConsulta(this->_baseDeDatos);
+    std::copy(rQuery.begin(), rQuery.end(), std::inserter(res, res.end()));
     return res;
 }
 
@@ -66,18 +67,3 @@ bool Driver::_leerLinea(ifstream& is, vector<string>& valores) const {
     return true;
 }
 
-linear_set<NombreCampo> Driver::vec_to_set(vector<NombreCampo> &vec){
-    linear_set<NombreCampo> set;
-    for(NombreCampo n : vec){
-        set.fast_insert(n);
-    }
-    return set;
-}
-
-vector<Registro> Driver::set_to_vec(linear_set<Registro> &set){
-    vector<Registro> vec;
-    for(Registro n : set){
-        vec.push_back(n);
-    }
-    return vec;
-}

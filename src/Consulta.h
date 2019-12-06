@@ -62,7 +62,6 @@ public:
     const Consulta& subconsulta1() const;
     const Consulta& subconsulta2() const;
 
-    // linear_set<Registro> procesarConsulta(const BaseDeDatos&) const;
     linear_set<Registro> procesarConsulta(const BaseDeDatos&) const;
     ~Consulta();
 
@@ -82,10 +81,9 @@ private:
     bool operator==(const Consulta&);
     Consulta(const Consulta&);
 
-    void _leer_de(istream&);
-    void _destruir();
+    // void _leer_de(istream&);     No se usa nunca ni esta implementado
 
-    /*Procesar Consulta*/
+    /*Procesar Consulta */
 
     linear_set<Registro> procesarFrom(const BaseDeDatos&) const;
     linear_set<Registro> procesarSelect(const BaseDeDatos&) const;
@@ -96,26 +94,23 @@ private:
     linear_set<Registro> procesarUnion(const BaseDeDatos&) const;
     linear_set<Registro> procesarProduct(const BaseDeDatos&) const;
 
-    /* Procesar Auxiliares */
+    /* Funciones Auxiliares */
 
-    /* SELECT */
+    /* - SELECT */
     linear_set<Registro> procesarSelectProduct (const BaseDeDatos&) const;
     linear_set<Registro> procesarSelectSelect (const BaseDeDatos&) const;
     linear_set<Registro> procesarSelectConClave (const BaseDeDatos&) const;
     linear_set<Registro> procesarSelectSinClave (const BaseDeDatos&) const;
     linear_set<Registro> procesarSelectBasico (const BaseDeDatos&) const;
 
-    /* PRODUCT */
+    /* - PRODUCT */
     Registro pCartesiano(const Registro&, const Registro&) const;
 
-    /* MATCH */
+    /* - MATCH */
     linear_set<Registro> procesarJoin(const Tabla&, const Tabla&) const;
     linear_set<Registro> procesarMatchBasico(const BaseDeDatos&) const;
 
-
-
-
-
+    void _destruir();
 
     class Parser {
     public:
@@ -149,7 +144,6 @@ private:
         istream& _input;
         string _contexto;
     };
-
 };
 
 ostream& operator<<(ostream&, const Consulta&);

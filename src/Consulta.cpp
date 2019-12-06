@@ -100,8 +100,10 @@ void Consulta::_destruir() {
     }
 }
 
-linear_set<Registro> Consulta::procesarConsulta(const BaseDeDatos& d) const{
-    switch(this->tipo_consulta()) {
+/* __PROCESAR_CONSULTA__ */
+
+linear_set<Registro> Consulta::procesarConsulta(const BaseDeDatos& d) const {
+    switch (this->tipo_consulta()) {
         case FROM:
             return procesarFrom(d);
         case SELECT:
@@ -122,13 +124,10 @@ linear_set<Registro> Consulta::procesarConsulta(const BaseDeDatos& d) const{
     return linear_set<Registro>();
 }
 
-/* Descripción: Retorna una copia de los registros de la tabla n en
- * la base de datos b.
- * Complejidad: O(Len(n) + k * (Copy(c) + Copy(v)))
- * Justificación: Accedemos al diccionario trie con el nombre de la tabla
- * en cuestión 'n'. Devolvemos una referencia al conjunto de registros de
- * la tabla.
- */
+/** ================================================================================================================ **/
+/**                                                   ..: FROM :..                                                   **/
+/** ================================================================================================================ **/
+
 /* Descripción: Retorna una copia de los registros de la tabla n en
  * la base de datos b.
  * Complejidad: O(Len(n) + k *(Copy(c) + Copy(v)))
@@ -139,6 +138,10 @@ linear_set<Registro> Consulta::procesarFrom(const BaseDeDatos& d) const{
     NombreTabla n = this->nombre_tabla();
     return d.obtenerTabla(n).registros();
 }
+
+/** ================================================================================================================ **/
+/**                                                  ..: SELECT :..                                                  **/
+/** ================================================================================================================ **/
 
 /* Descripción: SELECT
  * Complejidad: O(SELECT)
@@ -151,13 +154,13 @@ linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) const{
         s.subconsulta2().tipo_consulta() == FROM &&
         s.subconsulta1().nombre_tabla() != s.subconsulta2().nombre_tabla() &&
         d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() == this->campo1()) {
-            return procesarSelectProduct(d);
+        return procesarSelectProduct(d);
     }
     if (s.tipo_consulta() == SELECT &&
         s.subconsulta1().tipo_consulta() == FROM &&
         d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() == this->campo1() &&
         d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() != this->campo2()) {
-            return procesarSelectSelect(d);
+        return procesarSelectSelect(d);
     }
     if (s.tipo_consulta() == FROM) {
         if (d.obtenerTabla(s.nombre_tabla()).clave() == this->campo1())
@@ -179,7 +182,7 @@ linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) const{
  */
 linear_set<Registro> Consulta::procesarSelectConClave(const BaseDeDatos& d) const{
     NombreTabla nombreTabla = this->subconsulta1().nombre_tabla();
-    return d.obtenerTabla(nombreTabla).regsByFieldAndValue(this->campo1(), this->valor());
+    return d.obtenerTabla(nombreTabla).registrosValorEnCampo(this->campo1(), this->valor());
 }
 
 /* Descripción: Retorna una copia de los registros de la tabla 'n' cuyo
@@ -192,17 +195,17 @@ linear_set<Registro> Consulta::procesarSelectConClave(const BaseDeDatos& d) cons
  */
 linear_set<Registro> Consulta::procesarSelectSinClave(const BaseDeDatos& d) const{
     NombreTabla nombreTabla = this->subconsulta1().nombre_tabla();
-    return d.obtenerTabla(nombreTabla).regsByFieldAndValue(this->campo1(), this->valor());
+    return d.obtenerTabla(nombreTabla).registrosValorEnCampo(this->campo1(), this->valor());
 }
 
 /* Descripción:.
- * Complejidad: O(Len(c) + Copy(v))
+ * Complejidad:
  * Justificación:
  */
 linear_set<Registro> Consulta::procesarSelectProduct(const BaseDeDatos& d) const{
     NombreTabla t1 = this->subconsulta1().subconsulta1().nombre_tabla();
     linear_set<Registro> sKey =
-            d.obtenerTabla(t1).regsByFieldAndValue(this->campo1(), this->valor());  /* O(Len(n) + Len(c) + Len(v)) */
+            d.obtenerTabla(t1).registrosValorEnCampo(this->campo1(), this->valor());    /* O(Len(n) + Len(c) + Len(v)) */
 
     linear_set<Registro>::const_iterator itKey = sKey.begin();                          /* O(1) */
     Consulta qSub = this->subconsulta1().subconsulta2();
@@ -223,7 +226,7 @@ linear_set<Registro> Consulta::procesarSelectProduct(const BaseDeDatos& d) const
  */
 linear_set<Registro> Consulta::procesarSelectSelect(const BaseDeDatos& d) const {
     Tabla t = d.obtenerTabla(this->subconsulta1().subconsulta1().nombre_tabla());
-    linear_set<Registro> rSelect = t.regsByFieldAndValue(this->campo1(), this->valor());
+    linear_set<Registro> rSelect = t.registrosValorEnCampo(this->campo1(), this->valor());
 
     if (rSelect.size() == 1 &&
         (*rSelect.begin())[this->subconsulta1().campo1()] == this->subconsulta1().valor()) {
@@ -231,7 +234,6 @@ linear_set<Registro> Consulta::procesarSelectSelect(const BaseDeDatos& d) const 
     }
     else return linear_set<Registro>();
 }
-
 
 /* Descripción:
  * Complejidad: O(n * (Len(c) + Equal(v) + Copy(v)))
@@ -246,10 +248,17 @@ linear_set<Registro> Consulta::procesarSelectBasico(const BaseDeDatos& d) const 
             res.fast_insert(r);                     /* O(Len(c) + Copy(v))*/
         }
     }
-
     return res;
 }
 
+/** ================================================================================================================ **/
+/**                                                   ..: MATCH :..                                                  **/
+/** ================================================================================================================ **/
+
+/* Descripción:
+ * Complejidad: O(n * (Len(c) + Equal(v) + Copy(v)))
+ * Justificación:
+ */
 linear_set<Registro> Consulta::procesarMatch(const BaseDeDatos& d) const{
     NombreCampo campo1 = this->campo1();
     NombreCampo campo2 = this->campo2();
@@ -273,6 +282,39 @@ linear_set<Registro> Consulta::procesarMatch(const BaseDeDatos& d) const{
     return procesarMatchBasico(d);
 }
 
+/* Descripción:
+ * Complejidad: O(n * (Len(c) + Equal(v) + Copy(v)))
+ * Justificación:
+ */
+linear_set<Registro> Consulta::procesarJoin(const Tabla& t1, const Tabla& t2) const {
+    linear_set<Registro> rTabla1 = t1.registros();
+    linear_set<Registro> rTabla2 = t2.registros();
+    linear_set<Registro> res = linear_set<Registro>();
+
+    if (rTabla1.size() < rTabla2.size()) {
+        for (const Registro& r : rTabla1) {
+            if (t2.registrosValorEnCampo(this->campo2(), r[this->campo1()]).size() == 1) {
+                linear_set<Registro>::iterator itReg =
+                        t2.registrosValorEnCampo(this->campo2(), r[this->campo1()]).begin();
+                res.fast_insert(pCartesiano(*itReg, r));
+            }
+        }
+    } else {
+        for (const Registro& r : rTabla2) {
+            if (t1.registrosValorEnCampo(this->campo1(), r[this->campo2()]).size() == 1) {
+                linear_set<Registro>::iterator itReg =
+                        t2.registrosValorEnCampo(this->campo1(), r[this->campo2()]).begin();
+                res.fast_insert(pCartesiano(*itReg, r));
+            }
+        }
+    }
+    return res;
+}
+
+/* Descripción:
+ * Complejidad: O(n * (Len(c) + Equal(v) + Copy(v)))
+ * Justificación:
+ */
 linear_set<Registro> Consulta::procesarMatchBasico(const BaseDeDatos& d) const{
     linear_set<Registro> rQuery = this->subconsulta1().procesarConsulta(d);
     linear_set<Registro> res = linear_set<Registro>();
@@ -284,6 +326,10 @@ linear_set<Registro> Consulta::procesarMatchBasico(const BaseDeDatos& d) const{
     }
     return res;
 }
+
+/** ================================================================================================================ **/
+/**                                                   ..: PROJ :..                                                   **/
+/** ================================================================================================================ **/
 
 /* Descripción: Devuelve una copia de la proyección del conjunto de
  * registros resultante de la subconsulta1.
@@ -313,6 +359,10 @@ linear_set<Registro> Consulta::procesarProj(const BaseDeDatos& d) const{
     return res;
 }
 
+/** ================================================================================================================ **/
+/**                                                  ..: RENAME :..                                                  **/
+/** ================================================================================================================ **/
+
 /* Descripción: Devuelve por copia el conjunto de registros
  * resultantes de la subconsulta1 donde se renombró el
  * campo1 por campo2.
@@ -339,7 +389,7 @@ linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) const{
 
         for(NombreCampo c : r.campos()) {               /* O(k) - k: Cte. */
             if (c == this->campo1()) {                  /* O(Equal(c)) */
-                tmp.definir(this->campo2(), r[c]);/* O(Len(c) + Copy(v)) */
+                tmp.definir(this->campo2(), r[c]);      /* O(Len(c) + Copy(v)) */
             }
             else tmp.definir(c, r[c]);                  /* O(Len(c) + Copy(v)) */
         }
@@ -347,6 +397,10 @@ linear_set<Registro> Consulta::procesarRename(const BaseDeDatos& d) const{
     }
     return res;
 }
+
+/** ================================================================================================================ **/
+/**                                                   ..: INTER :..                                                  **/
+/** ================================================================================================================ **/
 
 /* Descripción: Devuelve el conjunto de registros en la intersección
  * de las dos subconsultas.
@@ -371,6 +425,10 @@ linear_set<Registro> Consulta::procesarInter(const BaseDeDatos& d) const{
     return res;
 }
 
+/** ================================================================================================================ **/
+/**                                                   ..: UNION :..                                                  **/
+/** ================================================================================================================ **/
+
 /* Descripción: Devuelve la union entre los registros resultantes de las
  * subconsultas especificadas.
  * Complejidad: O(Q + )
@@ -390,6 +448,10 @@ linear_set<Registro> Consulta::procesarUnion(const BaseDeDatos& d) const{
     return res;
 }
 
+/** ================================================================================================================ **/
+/**                                                  ..: PRODUCT :..                                                 **/
+/** ================================================================================================================ **/
+
 /* Descripción:.
  * Complejidad: O(Len(c) + Copy(v))
  * Justificación:
@@ -407,8 +469,6 @@ linear_set<Registro> Consulta::procesarProduct(const BaseDeDatos& d) const{
     return res;
 }
 
-
-
 /* Descripción: Devuelve el registro resultante de hacer el producto
  * cartesiano entre 'r1' y 'r2'.
  * Complejidad: O(Len(c) + Copy(v))
@@ -424,31 +484,6 @@ Registro Consulta::pCartesiano(const Registro& r1, const Registro& r2) const{
         reg.definir(c, r2[c]);                  /* O(Len(c) + Copy(v)) */
     }
     return reg;
-}
-
-linear_set<Registro> Consulta::procesarJoin(const Tabla& t1, const Tabla& t2) const {
-    linear_set<Registro> rTabla1 = t1.registros();
-    linear_set<Registro> rTabla2 = t2.registros();
-    linear_set<Registro> res = linear_set<Registro>();
-
-    if (rTabla1.size() < rTabla2.size()) {
-        for (const Registro& r : rTabla1) {
-            if (t2.regsByFieldAndValue(this->campo2(), r[this->campo1()]).size() == 1) {
-                linear_set<Registro>::iterator itReg =
-                        t2.regsByFieldAndValue(this->campo2(), r[this->campo1()]).begin();
-                res.fast_insert(pCartesiano(*itReg, r));
-            }
-        }
-    } else {
-        for (const Registro& r : rTabla2) {
-            if (t1.regsByFieldAndValue(this->campo1(), r[this->campo2()]).size() == 1) {
-                linear_set<Registro>::iterator itReg =
-                        t2.regsByFieldAndValue(this->campo1(), r[this->campo2()]).begin();
-                res.fast_insert(pCartesiano(*itReg, r));
-            }
-        }
-    }
-    return res;
 }
 
 Consulta::Parser::Parser(istream& is) : _input(is) {
@@ -693,39 +728,40 @@ static string mostrar_conj(set<string> v) {
 
 ostream& operator<<(ostream& os, const Consulta& q) {
     switch (q.tipo_consulta()) {
-        case FROM:
-            return os << "from(" << q.nombre_tabla() << ")";
-        case SELECT:
-            return os << "select(" << q.subconsulta1()
-                      << ", " << q.campo1()
-                      << ", " << "'" << q.valor() << "'"
-                      << ")";
-        case MATCH:
-            return os << "match(" << q.subconsulta1()
-                      << ", " << q.campo1()
-                      << ", " << q.campo2()
-                      << ")";
-        case PROJ:
-            return os << "proj(" << q.subconsulta1()
-                      << ", " << "{" << mostrar_conj(q.conj_campos()) << "}"
-                      << ")";
-        case RENAME:
-            return os << "rename(" << q.subconsulta1()
-                      << ", " << q.campo1()
-                      << ", " << q.campo2()
-                      << ")";
-        case INTER:
-            return os << "inter(" << q.subconsulta1()
-                      << ", " << q.subconsulta2()
-                      << ")";
-        case UNION:
-            return os << "union(" << q.subconsulta1()
-                      << ", " << q.subconsulta2()
-                      << ")";
-        case PRODUCT:
-            return os << "product(" << q.subconsulta1()
-                      << ", " << q.subconsulta2()
-                      << ")";
+    case FROM:
+        return os << "from(" << q.nombre_tabla() << ")";
+    case SELECT:
+        return os << "select(" << q.subconsulta1()
+                  << ", " << q.campo1()
+                  << ", " << "'" << q.valor() << "'"
+                  << ")";
+    case MATCH:
+        return os << "match(" << q.subconsulta1()
+                  << ", " << q.campo1()
+                  << ", " << q.campo2()
+                  << ")";
+    case PROJ:
+        return os << "proj(" << q.subconsulta1()
+                  << ", " << "{" << mostrar_conj(q.conj_campos()) << "}"
+                  << ")";
+    case RENAME:
+        return os << "rename(" << q.subconsulta1()
+                  << ", " << q.campo1()
+                  << ", " << q.campo2()
+                  << ")";
+    case INTER:
+        return os << "inter(" << q.subconsulta1()
+                  << ", " << q.subconsulta2()
+                  << ")";
+    case UNION:
+        return os << "union(" << q.subconsulta1()
+                  << ", " << q.subconsulta2()
+                  << ")";
+    case PRODUCT:
+        return os << "product(" << q.subconsulta1()
+                  << ", " << q.subconsulta2()
+                  << ")";
     }
     return os;
 }
+

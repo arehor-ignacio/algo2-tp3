@@ -1,61 +1,22 @@
-#ifndef TP3_BASEDEDATOS_H
-#define TP3_BASEDEDATOS_H
+#ifndef __BASEDEDATOS_H__
+#define __BASEDEDATOS_H__
 
-#include "modulos_basicos/string_map.h"
-
-#include "Tabla.h"
 #include "Tipos.h"
+#include "Tabla.h"
 #include "Registro.h"
-#include <list>
+#include "modulos_basicos/string_map.h"
 
 class BaseDeDatos {
 public:
-    BaseDeDatos() : _tables() {};
-
-    /**
-     * Returns a set with all contained nameTables
-     * Time complexity: O(1)
-     * */
-    const linear_set<NombreTabla> &tablas() const;
-
-    /**
-     * Returns the table associated with the name
-     * Pre = {_tables.count(tableName) > 0}
-     * Time complexity: O(1)
-     * */
-    const Tabla &obtenerTabla(const NombreTabla &tableName) const;
-
-    /**
-     * Adds a table with tableName as key and table as value
-     * Time complexity: O(name.size + copy(table))
-     * */
-    void agregarTabla(const NombreTabla &tableName, Tabla table);
-
-    /**
-     * Erases the table associated with tableName
-     * Time complexity: O(name.size + k * BorarRegistro(tableName, k_i))
-     * with k being the amount of registers in the table
-     * and k_i every register in the table
-     * */
-    void borrarTabla(const NombreTabla &tableName);
-
-    /**
-     * Adds the reg in the table associated with tableName
-     * Time complexity: O(tableName.size + reg.size * (f.size + v.size))
-     * reg.size = O(1), with f being the longest field and v being the longest value
-     * */
-    void agregarRegistro(const NombreTabla &tableName, Registro reg);
-
-    /**
-     * Erases the reg in the table associated with tableName
-     * Time complexity: O(tableName.size + reg.size * f.size)
-     * reg.size = O(1), with f being the longest field
-     * */
-    void borrarRegistro(const NombreTabla &tableName, Registro reg);
+    BaseDeDatos();
+    const string_map<Tabla>& tablas() const;
+    const Tabla& obtenerTabla(const NombreTabla&) const;
+    void agregarTabla(const NombreTabla&, const Tabla&);
+    void borrarTabla(const NombreTabla&);
+    void agregarRegistro(const NombreTabla&, const Registro&);
+    void borrarRegistro(const NombreTabla&, const Valor&);
 
 private:
-    string_map<Tabla> _tables;
-
+    algo2::string_map<Tabla> _tablas;
 };
-
-#endif //TP3_BASEDEDATOS_H
+#endif //__BASEDEDATOS_H__

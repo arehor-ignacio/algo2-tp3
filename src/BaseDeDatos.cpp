@@ -1,26 +1,29 @@
 #include "BaseDeDatos.h"
 
-const linear_set<NombreTabla>& BaseDeDatos::tablas() const {
-    return _tables.keys();
+BaseDeDatos::BaseDeDatos() {};
+
+const string_map<Tabla>& BaseDeDatos::tablas() const {
+    return this->_tablas;
 }
 
-const Tabla &BaseDeDatos::obtenerTabla(const NombreTabla &tableName) const {
-    return _tables.at(tableName);
+/* Pre: Def(n, Tablas) */
+const Tabla& BaseDeDatos::obtenerTabla(const NombreTabla& n) const {
+    return this->_tablas.at(n);
 }
 
-void BaseDeDatos::agregarTabla(const NombreTabla &tableName, Tabla table) {
-    _tables[tableName] = table;
+void BaseDeDatos::agregarTabla(const NombreTabla& n, const Tabla& t) {
+    this->_tablas[n] = t;
 }
+/* Pre: Def(n, Tablas) */
+void BaseDeDatos::borrarTabla(const NombreTabla& n) {
+    this->_tablas.erase(n);
+}
+/* Pre: Def(n, Tablas) ^ Campos(r) = Campos(Obtener(n, Tablas)) */
+void BaseDeDatos::agregarRegistro(const NombreTabla& n, const Registro& r) {
+    this->_tablas.at(n).insertar(r);
+}
+/* Pre: Def(n, Tablas) ^ ClaveDefinida(r, Obtener(n, Tablas)) */
+void BaseDeDatos::borrarRegistro(const NombreTabla& n, const Valor& v) {
+    this->_tablas.at(n).borrar(v);
+};
 
-void BaseDeDatos::borrarTabla(const NombreTabla &tableName) {
-    _tables.erase(tableName);
-}
-
-void BaseDeDatos::agregarRegistro(const NombreTabla &tableName, Registro reg) {
-    _tables[tableName].insertar(reg);
-}
-
-void BaseDeDatos::borrarRegistro(const NombreTabla &tableName, Registro reg) {
-    NombreCampo keyField = _tables[tableName].clave();
-    _tables[tableName].borrar(reg[keyField]);
-}
