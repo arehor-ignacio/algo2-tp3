@@ -1,8 +1,8 @@
 #include "gtest-1.8.1/gtest.h"
 #include "../src/BaseDeDatos.h"
-
-linear_set<NombreCampo> personsTableFields() {
-    linear_set<NombreCampo> fields = linear_set<NombreCampo>();
+#include <set>
+std::set<NombreCampo> personsTableFields() {
+    std::set<NombreCampo> fields = std::set<NombreCampo>();
 
     fields.insert("Nombre");
     fields.insert("Apellido");
@@ -11,8 +11,8 @@ linear_set<NombreCampo> personsTableFields() {
     return fields;
 }
 
-linear_set<NombreCampo> countryTableFields() {
-    linear_set<NombreCampo> fields = linear_set<NombreCampo>();
+std::set<NombreCampo> countryTableFields() {
+    std::set<NombreCampo> fields = std::set<NombreCampo>();
 
     fields.insert("Nombre");
     fields.insert("Cant Personas");
@@ -22,11 +22,11 @@ linear_set<NombreCampo> countryTableFields() {
 }
 
 Tabla createPersonsTable() {
-    return Tabla(personsTableFields(), "DNI");
+    return Tabla("DNI", personsTableFields());
 }
 
 Tabla createCountriesTable() {
-    return Tabla(countryTableFields(), "Nombre");
+    return Tabla("Nombre", countryTableFields());
 }
 
 Registro createRegister(vector<NombreCampo> fields, vector<NombreCampo> values) {
@@ -118,12 +118,12 @@ TEST(BDD_test, insertar_y_borrar_registros) {
     EXPECT_EQ(db.obtenerTabla("Personas").registros(), personsRegs);
     EXPECT_EQ(db.obtenerTabla("Paises").registros(), countriesRegs);
 
-    db.borrarRegistro("Personas", regPer1);
+    db.borrarRegistro("Personas", regPer1["DNI"]);
     personsRegs.erase(regPer1);
 
     EXPECT_EQ(db.obtenerTabla("Personas").registros(), personsRegs);
 
-    db.borrarRegistro("Paises", regCou1);
+    db.borrarRegistro("Paises", regCou1["Nombre"]);
     countriesRegs.erase(regCou1);
 
     EXPECT_EQ(db.obtenerTabla("Paises").registros(), countriesRegs);

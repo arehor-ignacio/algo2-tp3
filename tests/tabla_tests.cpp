@@ -2,8 +2,8 @@
 #include "../src/Tabla.h"
 #include <vector>
 
-linear_set<NombreCampo> getFieldsToTest() {
-    linear_set<NombreCampo> fields = linear_set<NombreCampo>();
+std::set<NombreCampo> getFieldsToTest() {
+    std::set<NombreCampo> fields = std::set<NombreCampo>();
 
     fields.insert("Nombre");
     fields.insert("Apellido");
@@ -18,7 +18,7 @@ NombreCampo getKeyToTest() {
 }
 
 Tabla initializeTable() {
-    return Tabla(getFieldsToTest(), getKeyToTest());
+    return Tabla(getKeyToTest(), getFieldsToTest());
 }
 
 Registro createRegister(vector<NombreCampo> values) {
