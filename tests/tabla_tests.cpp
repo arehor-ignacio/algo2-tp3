@@ -35,7 +35,7 @@ Registro createRegister(vector<NombreCampo> values) {
 TEST(tabla_test, vacio) {
     Tabla table = initializeTable();
 
-    EXPECT_EQ(table.registros().size(), 0);
+    EXPECT_EQ(table.registros().size(), (int) 0);
     EXPECT_EQ(table.campos(), getFieldsToTest());
     EXPECT_EQ(table.clave(), getKeyToTest());
 }

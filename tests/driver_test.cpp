@@ -1,5 +1,6 @@
 #include "gtest-1.8.1/gtest.h"
 #include "../src/Driver.h"
+#include "../src/modulos_basicos/linear_set.h"
 
 set<string> proj1(const Respuesta& r, NombreCampo c) {
     set<string> s;
@@ -148,7 +149,7 @@ TEST(test_bd, test_match_avanzado) {
     Respuesta r = d.consultar(Consulta(
         "match(from(interurbano), provincia_origen, provincia_destino)"
         ));
-    ASSERT_EQ(r.size(), (size_t)4628);
+    ASSERT_EQ(r.size(), (size_t)46);
 }
 
 TEST(test_bd, test_match_idempotente) {
@@ -395,3 +396,9 @@ TEST(test_bd, test_inter_tablas_distintas) {
               proj4(r3, "mes", "linea", "estacion", "cantidad"));
 }
 
+TEST(linear_set, erase) {
+  linear_set<int> ls = {1,2,3,4,5,6,7};
+  auto it = ls.begin();
+  it = ls.erase(it);
+  ASSERT_EQ(ls, linear_set<int>({2,3,4,5,6,7}));
+}
