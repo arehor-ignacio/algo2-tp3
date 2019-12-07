@@ -4,7 +4,7 @@
 #include <sstream>
 
 #include "Driver.h"
-
+int k =0;
 void Driver::crearTabla(NombreTabla tabla, vector<NombreCampo> campos,
                         NombreCampo clave) {
     std::set<NombreCampo> f = std::set<NombreCampo>();
@@ -25,7 +25,8 @@ Respuesta Driver::consultar(const Consulta& q) {
 }
 
 void Driver::leerDataset(string dataset) {
-    ifstream is("datos/" + dataset + ".txt");
+    string a = "datos/" + dataset + ".txt";
+    ifstream is(a);
     
     vector<string> campos;
     _leerLinea(is, campos);
@@ -45,6 +46,7 @@ void Driver::leerDataset(string dataset) {
                  << endl;
             exit(1);
         }
+        k = k +1;
         Registro r;
         for (size_t i = 0; i < campos.size(); i++) {
             //r[campos[i]] = valores[i]; SE PUEDE??? SI NO SE PUEDE, HAY QUE CAMBIAR OPERADOR[] DE REGISTRO

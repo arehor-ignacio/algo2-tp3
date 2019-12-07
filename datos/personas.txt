@@ -1,4 +1,3 @@
 cuit,nombre,apellido
-101,fulano,de tal
-102,mengano,mengano
-103,zutano,de tal
+101,fuláno,méngano
+102,fuláno,méngano

@@ -113,8 +113,7 @@ linear_set<Registro> Consulta::procesarConsulta(const BaseDeDatos& d) const {
         case PROJ:
             return procesarProj(d);
         case RENAME:
-            return procesarRename(d);
-        case INTER:
+         case INTER:
             return procesarInter(d);
         case UNION:
             return procesarUnion(d);

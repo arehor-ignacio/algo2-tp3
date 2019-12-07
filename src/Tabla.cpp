@@ -23,7 +23,7 @@ void Tabla::insertar(const Registro& r) {
 void Tabla::borrar(const Valor& v) {
     ItRegistro it = obtenerItRegistro(v);
     for (const NombreCampo& c : this->campos()) {
-        this->_valoresPorCampo.at(c).at((*it).operator[](c)).erase(it);
+        this->_valoresPorCampo.at(c).at((*it)[c]).erase(it);
     }
     this->_registros.erase(it);
 }

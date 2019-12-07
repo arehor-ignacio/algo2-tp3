@@ -25,5 +25,4 @@ void BaseDeDatos::agregarRegistro(const NombreTabla& n, const Registro& r) {
 /* Pre: Def(n, Tablas) ^ ClaveDefinida(r, Obtener(n, Tablas)) */
 void BaseDeDatos::borrarRegistro(const NombreTabla& n, const Valor& v) {
     this->_tablas.at(n).borrar(v);
-};
-
+}
