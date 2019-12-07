@@ -159,7 +159,7 @@ linear_set<Registro> Consulta::procesarSelect(const BaseDeDatos& d) const{
     if (s.tipo_consulta() == SELECT &&
         s.subconsulta1().tipo_consulta() == FROM &&
         d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() == this->campo1() &&
-        d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() != this->subconsulta1().campo2()) {
+        d.obtenerTabla(s.subconsulta1().nombre_tabla()).clave() != this->subconsulta1().campo1()) {
         return procesarSelectSelect(d);
     }
     if (s.tipo_consulta() == FROM) {
