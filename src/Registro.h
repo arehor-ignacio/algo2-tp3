@@ -15,10 +15,10 @@ public:
     const Valor& operator[](const NombreCampo&) const;
     bool operator==(const Registro&) const;
     void definir(const NombreCampo&, const Valor&);
-    set<NombreCampo> campos() const;
+    linear_set<NombreCampo> campos() const;
     bool def(const NombreCampo&) const;
 private:
-    algo2::string_map<Valor> _registro;
+    string_map<Valor> _registro;
 };
 
 #endif /*__REGISTRO_H__*/

@@ -7,8 +7,9 @@
 
 void Driver::crearTabla(NombreTabla tabla, vector<NombreCampo> campos,
                         NombreCampo clave) {
-    std::set<NombreCampo> f = std::set<NombreCampo>();
-    std::copy(campos.begin(), campos.end(), std::inserter(f, f.end()));
+    linear_set<NombreCampo> f = linear_set<NombreCampo>();
+
+    f = vec_to_set(campos);
 
     this->_baseDeDatos.agregarTabla(tabla, Tabla(clave, f));
 }
@@ -68,3 +69,10 @@ bool Driver::_leerLinea(ifstream& is, vector<string>& valores) const {
     return true;
 }
 
+linear_set<NombreCampo> Driver::vec_to_set(vector<NombreCampo> &vec){
+    linear_set<NombreCampo> set;
+    for(NombreCampo n : vec){
+        set.fast_insert(n);
+    }
+    return set;
+}

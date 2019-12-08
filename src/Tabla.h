@@ -13,10 +13,10 @@ typedef linear_set<ItRegistro> ConjItRegistros;
 class Tabla {
 public:
     Tabla();
-    Tabla(const NombreCampo&, const std::set<NombreCampo>&);
+    Tabla(const NombreCampo&, const linear_set<NombreCampo>&);
     void insertar(const Registro&);
     void borrar(const Valor&);
-    const std::set<NombreCampo>& campos() const;
+    const linear_set<NombreCampo>& campos() const;
     const linear_set<Registro>& registros() const;
     linear_set<Registro> registrosValorEnCampo(const NombreCampo&, const Valor&) const;
     const NombreCampo& clave() const;

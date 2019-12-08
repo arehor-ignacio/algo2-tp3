@@ -40,6 +40,7 @@ private:
     BaseDeDatos _baseDeDatos;
 
     bool _leerLinea(ifstream& is, vector<string>& valores) const;
+    linear_set<NombreCampo> vec_to_set(vector<NombreCampo> &vec);
 };
 
 #endif /*__DRIVER_H__*/

@@ -1,8 +1,8 @@
 #include "gtest-1.8.1/gtest.h"
 #include "../src/BaseDeDatos.h"
 #include <set>
-std::set<NombreCampo> personsTableFields() {
-    std::set<NombreCampo> fields = std::set<NombreCampo>();
+linear_set<NombreCampo> personsTableFields() {
+    linear_set<NombreCampo> fields = linear_set<NombreCampo>();
 
     fields.insert("Nombre");
     fields.insert("Apellido");
@@ -11,8 +11,8 @@ std::set<NombreCampo> personsTableFields() {
     return fields;
 }
 
-std::set<NombreCampo> countryTableFields() {
-    std::set<NombreCampo> fields = std::set<NombreCampo>();
+linear_set<NombreCampo> countryTableFields() {
+    linear_set<NombreCampo> fields = linear_set<NombreCampo>();
 
     fields.insert("Nombre");
     fields.insert("Cant Personas");

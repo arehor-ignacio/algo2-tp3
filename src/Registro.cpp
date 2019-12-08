@@ -1,10 +1,10 @@
 #include "Registro.h"
 
 /* Complejidad: O(1) */
-Registro::Registro() : _registro(algo2::string_map<Valor>()){
+Registro::Registro() : _registro(string_map<Valor>()){
 }
 /* Complejidad: O(Copy(c)) */
-set<NombreCampo> Registro::campos() const {
+linear_set<NombreCampo> Registro::campos() const {
     return this->_registro.keys();
 }
 /* Complejidad: O(Len(c)) */

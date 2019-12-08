@@ -1,7 +1,7 @@
 #include "Tabla.h"
 
 Tabla::Tabla() {}
-Tabla::Tabla(const NombreCampo& k, const std::set<NombreCampo>& campos) : _clave(k) {
+Tabla::Tabla(const NombreCampo& k, const linear_set<NombreCampo>& campos) : _clave(k) {
     for (const NombreCampo& c : campos) {
         this->_valoresPorCampo[c] = string_map<ConjItRegistros>();
     }
@@ -50,7 +50,7 @@ const ItRegistro& Tabla::obtenerItRegistro(const Valor& v) const {
     return *itConjunto;
 }
 /* Complejidad: O(1) */
-const std::set<NombreCampo>& Tabla::campos() const {
+const linear_set<NombreCampo>& Tabla::campos() const {
     return this->_valoresPorCampo.keys();
 }
 /* Complejidad: O(1) */

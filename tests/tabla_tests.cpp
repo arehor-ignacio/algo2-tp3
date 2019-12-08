@@ -2,8 +2,8 @@
 #include "../src/Tabla.h"
 #include <vector>
 
-std::set<NombreCampo> getFieldsToTest() {
-    std::set<NombreCampo> fields = std::set<NombreCampo>();
+linear_set<NombreCampo> getFieldsToTest() {
+    linear_set<NombreCampo> fields = linear_set<NombreCampo>();
 
     fields.insert("Nombre");
     fields.insert("Apellido");

@@ -49,6 +49,10 @@ TEST(test_bd, test_select_basico) {
 TEST(test_bd, test_select_avanzado) {
     Driver d;
     d.leerDataset("trenes");
+
+    //Consulta q = Consulta("select(from(trenes), linea, 'roca')");
+    //Respuesta r = d.consultar(q);
+
     Respuesta r1 = d.consultar(Consulta(
         "select(from(trenes), linea, 'roca')"
         ));
