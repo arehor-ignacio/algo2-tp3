@@ -62,7 +62,6 @@ T &string_map<T>::operator[](const string &key) {
         actual->_def.first = new T();
         actual->_def.second = _keys.fast_insert(key);
         _size++;
-        // actual->_def.second = _getLastIt(_keys.begin(), _keys.end());
 
         return *(actual->_def.first);
     } else {
@@ -241,15 +240,3 @@ bool string_map<T>::operator==(const string_map toCompare) const {
 
     return true;
 }
-
-/*
-template<typename T>
-linear_set<string>::iterator
-string_map<T>::_getLastIt(linear_set<string>::iterator begin, linear_set<string>::iterator last) {
-    linear_set<string>::iterator prior = begin;
-    while(++begin != last) {
-        prior = begin;
-    }
-    return prior;
-}
-*/
