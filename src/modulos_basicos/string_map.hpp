@@ -1,4 +1,3 @@
-
 #include "string_map.h"
 
 template <typename T>
@@ -44,12 +43,12 @@ T& string_map<T>::operator[](const string& clave){
     }
     struct Nodo* nodoTrie = this->_raiz;
 
-    for (int i = 0; i < (int) clave.size(); ++i) {
-        if (nodoTrie->siguientes[(int)clave[i]] == nullptr) {
-            nodoTrie->siguientes[(int)clave[i]] = new Nodo();
+    for (int i = 0; i < clave.size(); ++i) {
+        if (nodoTrie->siguientes[clave[i]] == nullptr) {
+            nodoTrie->siguientes[clave[i]] = new Nodo();
             flag = true;
         }
-        nodoTrie = nodoTrie->siguientes[(int)clave[i]];
+        nodoTrie = nodoTrie->siguientes[clave[i]];
     }
 
     if (flag) {
@@ -93,7 +92,7 @@ T& string_map<T>::at(const string& clave) {
     struct Nodo* nodoTrie = this->_raiz;
 
     for (int i = 0; i < (int)clave.size(); ++i) {
-        nodoTrie = nodoTrie->siguientes[(int)clave[i]];
+        nodoTrie = nodoTrie->siguientes[clave[i]];
     }
     return *(nodoTrie->definicion);
 }

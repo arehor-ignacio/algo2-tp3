@@ -311,17 +311,24 @@ linear_set<Registro> Consulta::procesarJoin(const Tabla& t1, const Tabla& t2) co
     return res;
 }
 
-/* Descripción:
- * Complejidad: O(n * (Len(c) + Equal(v) + Copy(v)))
- * Justificación:
+/* Descripción: Devuelve una copia de aquellos registros cuyos
+ * campos especificados coinciden.
+ * Complejidad: O(Q + n * (Len(c) + Equal(v) + Copy(v)))
+ * Justificación: El costo de procesar una consulta de tipo match está
+ * compuesto por el costo de procesar la subconsulta1, el costo de la
+ * comparación entre dos valores, y el acceso al diccionario trie.
+ * Estos costos están acotados por el acceso al campo de de mayor
+ * longitud, 'c', y la comparación y el copiado del valor de mayor
+ * tamaño, 'v'.
  */
 linear_set<Registro> Consulta::procesarMatchBasico(const BaseDeDatos& d) const{
-    linear_set<Registro> rQuery = this->subconsulta1().procesarConsulta(d);
+    linear_set<Registro> rQuery = this->subconsulta1().procesarConsulta(d); /* O(Q) */
     linear_set<Registro> res = linear_set<Registro>();
 
     for (const Registro& r : rQuery) {
-        if (r.def(this->campo1()) && r.def(this->campo2()) && r[this->campo1()] == r[this->campo2()]) {
-            res.fast_insert(r);
+        if (r.def(this->campo1()) && r.def(this->campo2()) &&   /* O(Len(c)) */
+            r[this->campo1()] == r[this->campo2()]) {           /* O(Len(c) + Equal(v)) */
+            res.fast_insert(r);                                 /* O(Len(c) + Copy(v)) */
         }
     }
     return res;
@@ -431,12 +438,13 @@ linear_set<Registro> Consulta::procesarInter(const BaseDeDatos& d) const{
 
 /* Descripción: Devuelve la union entre los registros resultantes de las
  * subconsultas especificadas.
- * Complejidad: O(Q + )
- * Justificación:
+ * Complejidad: O(Q + n * (Len(c) + Copy(v)))
+ * Justificación: Sea 'Q' el costo máximo de procesar las subconsultas,
+ * entonces si 'n' es la maxima
  */
 linear_set<Registro> Consulta::procesarUnion(const BaseDeDatos& d) const{
-    linear_set<Registro> rQuery1 = (this->subconsulta1()).procesarConsulta(d);
-    linear_set<Registro> rQuery2 = (this->subconsulta2()).procesarConsulta(d);
+    linear_set<Registro> rQuery1 = (this->subconsulta1()).procesarConsulta(d); /* O(Q) */
+    linear_set<Registro> rQuery2 = (this->subconsulta2()).procesarConsulta(d); /* O(Q) */
     linear_set<Registro> res = linear_set<Registro>();
 
     for (const Registro& r1 : rQuery1) {   /* O(n) */
@@ -764,4 +772,3 @@ ostream& operator<<(ostream& os, const Consulta& q) {
     }
     return os;
 }
-

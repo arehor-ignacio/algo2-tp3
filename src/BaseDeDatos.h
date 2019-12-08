@@ -17,6 +17,6 @@ public:
     void borrarRegistro(const NombreTabla&, const Valor&);
 
 private:
-    algo2::string_map<Tabla> _tablas;
+    string_map<Tabla> _tablas;
 };
 #endif //__BASEDEDATOS_H__

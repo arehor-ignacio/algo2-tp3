@@ -18,7 +18,7 @@ public:
     set<NombreCampo> campos() const;
     bool def(const NombreCampo&) const;
 private:
-    algo2::string_map<Valor> _registro;
+    string_map<Valor> _registro;
 };
 
 #endif /*__REGISTRO_H__*/

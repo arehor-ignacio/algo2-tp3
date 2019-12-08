@@ -1,6 +1,6 @@
 #ifndef STRING_MAP_H_
-#define STRING_MAP_H_
 
+#define STRING_MAP_H_
 #define SIGUIENTES_SIZE 256
 
 #include <string>
@@ -8,8 +8,6 @@
 #include "linear_set_iterators.h"
 
 using namespace std;
-
-namespace algo2 {
 
 template<typename T>
 class string_map{
@@ -119,7 +117,5 @@ private:
     std::set<string> _keys;
 };
 
-}
 #include "string_map.hpp"
-
-#endif // STRING_MAP_H_
+#endif
