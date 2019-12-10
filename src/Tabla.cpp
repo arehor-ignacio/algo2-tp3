@@ -1,67 +1,78 @@
 #include "Tabla.h"
 
-Tabla::Tabla() {}
-Tabla::Tabla(const NombreCampo& k, const std::set<NombreCampo>& campos) : _clave(k) {
-    for (const NombreCampo& c : campos) {
-        this->_valoresPorCampo[c] = string_map<ConjItRegistros>();
+Tabla::Tabla(const NombreCampo& k, const std::set<NombreCampo>& cs) : _clave(k) {
+    for (NombreCampo c : cs) {
+        this->_valoresEnCampo[c] = string_map<std::list<itListaRegistros>>();
     }
 }
-/* Complejidad: O(Len(c) + Len(v) + n)*/
-void Tabla::insertar(const Registro& r) {
-    Valor vClave = r[this->clave()];
-    if (this->claveDefinida(vClave)) {
-        borrar(vClave);
+/* Complejidad: O(Copy(c) + n * (Len(c) + Copy(v))) */
+Tabla& Tabla::operator=(const Tabla& t) {
+    this->_clave = t.clave();
+
+    for (const NombreCampo& c : t.campos()) {
+        this->_valoresEnCampo[c] = string_map<std::list<itListaRegistros>>();
     }
 
-    ItRegistro it = this->_registros.fast_insert(r);
+    for (const Registro& r : t.registros()) {
+        this->insertar(r);
+    }
+    return *this;
+}
+
+/* Complejidad: O(Len(c) + Copy(v) + Len(v) + n)*/
+void Tabla::insertar(Registro r) {
+    std::list<Registro>::const_iterator itEnd = this->_registros.end();
+    std::list<Registro>::iterator itInsertar = this->_registros.insert(itEnd, r);
+
     for (NombreCampo c : r.campos()) {
-        this->_valoresPorCampo.at(c)[r[c]].fast_insert(it);
+        Valor val = r[c];
+        this->_valoresEnCampo.at(c)[val].push_back(itInsertar); // Agregamos al final del "conjunto" el iterador al registro.
     }
 }
-/* Pre: claveDefinida(v) */
+
 /* Complejidad: O(Len(c) + Len(v) + n)*/
 void Tabla::borrar(const Valor& v) {
-    ItRegistro it = obtenerItRegistro(v);
-    for (const NombreCampo& c : this->campos()) {
-        this->_valoresPorCampo.at(c).at((*it).operator[](c)).erase(it);
-    }
-    this->_registros.erase(it);
-}
-/* Complejidad: O(Len(c) + Len(v) + n *(Len(c) + Copy(v))) */
-linear_set<Registro> Tabla::registrosValorEnCampo(const NombreCampo& c, const Valor& v) const {
-    const ConjItRegistros& itRegs = this->_valoresPorCampo.at(c).at(v);
-    linear_set<Registro> res = linear_set<Registro>();
+    itListaRegistros itRegistro = ObtenerPorClave(v);
 
-    for (const ItRegistro& it : itRegs) {
-        res.fast_insert(*it);
+    for (NombreCampo c : this->campos()) {
+        Valor val = (*itRegistro)[c];
+        this->_valoresEnCampo.at(c).at(val).remove(itRegistro);
+    }
+    this->_registros.erase(itRegistro);
+}
+
+/* Complejidad: O(1) */
+const std::set<NombreCampo>& Tabla::campos() const {
+    return this->_valoresEnCampo.keys();
+}
+
+/* Complejidad: O(1) */
+const std::list<Registro>& Tabla::registros() const {
+    return this->_registros;
+}
+/* Complejidad: O(Len(c) + Len(v) + n * (Len(c) + Copy(v))) */
+std::list<Registro> Tabla::regsValorEnCampo(const NombreCampo& c, const Valor& v) const {
+    const std::list<itListaRegistros>& conjIteradores = this->_valoresEnCampo.at(c).at(v);
+    std::list<Registro> res;
+
+    for (itListaRegistros it : conjIteradores) {
+        res.push_back(*it);
     }
     return res;
 }
-/* Complejidad: O(Len(c) + Len(v) + n *(Len(c) + Copy(v))) */
-bool Tabla::claveDefinida(const Valor& v) const {
-//    return registrosValorEnCampo(this->clave(), v).size() == 1;
-    return this->_valoresPorCampo.at(this->clave()).count(v) == 1;
-}
-/* Pre: claveDefinida(v) */
-/* Complejidad: O(Len(c) + Len(v)) */
-const ItRegistro& Tabla::obtenerItRegistro(const Valor& v) const {
-    const ConjItRegistros& conjItRegistros = this->_valoresPorCampo.at(this->clave()).at(v);
-    linear_set<ItRegistro>::const_iterator itConjunto = conjItRegistros.begin();
-    return *itConjunto;
-}
+
 /* Complejidad: O(1) */
-const std::set<NombreCampo>& Tabla::campos() const {
-    return this->_valoresPorCampo.keys();
-}
-/* Complejidad: O(1) */
-const linear_set<Registro>& Tabla::registros() const {
-    return this->_registros;
-}
-/* Complejidad: O(1) */
-const NombreCampo &Tabla::clave() const {
+const NombreCampo& Tabla::clave() const {
     return this->_clave;
 }
 
+/* Complejidad: O(Equal(c) + n * (Len(c) + Equal(v)))*/
 bool Tabla::operator==(const Tabla& t) const {
     return this->clave() == t.clave() && this->registros() == t.registros();
+}
+
+/* Complejidad: O(Len(c) + Len(v)) */
+const itListaRegistros& Tabla::ObtenerPorClave(const Valor& v) const{
+    const std::list<itListaRegistros>& conjItRegistro = this->_valoresEnCampo.at(this->clave()).at(v);
+    return conjItRegistro.front(); // Como solo hay un único elemento cuyo campo clave vale v.
 }

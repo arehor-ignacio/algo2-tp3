@@ -8,7 +8,7 @@ TEST(registro_test, vacio) {
 }
 
 TEST(registro_test, op_corchetes) {
-    Registro reg = Registro();
+    Registro reg;
 
     reg.definir("Nombre", "Gabriel");
     EXPECT_EQ(reg["Nombre"], "Gabriel");

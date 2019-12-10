@@ -1,21 +1,17 @@
 #ifndef __REGISTRO_H__
 #define __REGISTRO_H__
 
+#include <set>
 
 #include "Tipos.h"
-#include <set>
 #include "modulos_basicos/string_map.h"
-
-using namespace std;
 
 class Registro {
 public:
-    Registro();
-    Valor& operator[](const NombreCampo&);
+    const std::set<NombreCampo>& campos() const;
     const Valor& operator[](const NombreCampo&) const;
     bool operator==(const Registro&) const;
     void definir(const NombreCampo&, const Valor&);
-    set<NombreCampo> campos() const;
     bool def(const NombreCampo&) const;
 private:
     string_map<Valor> _registro;

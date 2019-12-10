@@ -7,10 +7,10 @@
 
 void Driver::crearTabla(NombreTabla tabla, vector<NombreCampo> campos,
                         NombreCampo clave) {
-    std::set<NombreCampo> f = std::set<NombreCampo>();
-    std::copy(campos.begin(), campos.end(), std::inserter(f, f.end()));
+    std::set<NombreCampo> cs;
+    std::copy(campos.begin(), campos.end(), std::inserter(cs, cs.end()));
 
-    this->_baseDeDatos.agregarTabla(tabla, Tabla(clave, f));
+    this->_baseDeDatos.agregarTabla(tabla, Tabla(clave, cs));
 }
 
 void Driver::insertarRegistro(NombreTabla t, Registro r) {
@@ -18,9 +18,9 @@ void Driver::insertarRegistro(NombreTabla t, Registro r) {
 }
 
 Respuesta Driver::consultar(const Consulta& q) {
-    std::vector<Registro> res = std::vector<Registro>();
-    linear_set<Registro> rQuery = q.procesarConsulta(this->_baseDeDatos);
-    std::copy(rQuery.begin(), rQuery.end(), std::inserter(res, res.end()));
+    Respuesta res;
+    std::list<Registro> resQuery = q.procesarConsulta(this->_baseDeDatos);
+    std::copy(resQuery.begin(), resQuery.end(), std::inserter(res, res.end()));
     return res;
 }
 
@@ -47,7 +47,10 @@ void Driver::leerDataset(string dataset) {
         }
         Registro r;
         for (size_t i = 0; i < campos.size(); i++) {
-            //r[campos[i]] = valores[i]; SE PUEDE??? SI NO SE PUEDE, HAY QUE CAMBIAR OPERADOR[] DE REGISTRO
+            // r[campos[i]] = valores[i]; Si no se puede modificar este
+            // archivo, hay que cambiar la definición del operador[] del
+            // módulo Registro, ya que este utiliza el método 'at' de
+            // string_map.
             r.definir(campos[i], valores[i]);
         }
         insertarRegistro(dataset, r);

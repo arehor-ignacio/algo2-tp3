@@ -53,5 +53,3 @@ add_custom_target(correrValgrind
         DEPENDS correrTests)
 
 target_compile_options(correrTests-Wall PUBLIC -Wall)
-
-target_compile_definitions(correrTestsStringMap PUBLIC STRING_MAP_TEST)

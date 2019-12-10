@@ -6,6 +6,7 @@
 
 #include "Tipos.h"
 #include "Registro.h"
+#include "Tabla.h"
 #include "BaseDeDatos.h"
 
 using namespace std;
@@ -62,7 +63,8 @@ public:
     const Consulta& subconsulta1() const;
     const Consulta& subconsulta2() const;
 
-    linear_set<Registro> procesarConsulta(const BaseDeDatos&) const;
+    std::list<Registro> procesarConsulta(const BaseDeDatos&) const;
+
     ~Consulta();
 
 private:
@@ -79,38 +81,34 @@ private:
 
     // Operador de asignación y constructor por copia no implementados.
     bool operator==(const Consulta&);
-    //Consulta(const Consulta&);
+    Consulta(const Consulta&);
 
-    // void _leer_de(istream&);     No se usa nunca ni esta implementado
+    void _leer_de(istream&);
+    void _destruir();
 
-    /*Procesar Consulta */
+    const std::list<Registro>& procesarFrom(const BaseDeDatos&) const;
+    std::list<Registro> procesarSelect(const BaseDeDatos&) const;
+    std::list<Registro> procesarMatch(const BaseDeDatos&) const;
+    std::list<Registro> procesarProj(const BaseDeDatos&) const;
+    std::list<Registro> procesarRename(const BaseDeDatos&) const;
+    std::list<Registro> procesarInter(const BaseDeDatos&) const;
+    std::list<Registro> procesarUnion(const BaseDeDatos&) const;
+    std::list<Registro> procesarProduct(const BaseDeDatos&) const;
 
-    linear_set<Registro> procesarFrom(const BaseDeDatos&) const;
-    linear_set<Registro> procesarSelect(const BaseDeDatos&) const;
-    linear_set<Registro> procesarMatch(const BaseDeDatos&) const;
-    linear_set<Registro> procesarProj(const BaseDeDatos&) const;
-    linear_set<Registro> procesarRename(const BaseDeDatos&) const;
-    linear_set<Registro> procesarInter(const BaseDeDatos&) const;
-    linear_set<Registro> procesarUnion(const BaseDeDatos&) const;
-    linear_set<Registro> procesarProduct(const BaseDeDatos&) const;
+    /* SELECT */
+    std::list<Registro> procesarSelectConClave(const BaseDeDatos&) const;
+    std::list<Registro> procesarSelectSinClave(const BaseDeDatos&) const;
+    std::list<Registro> procesarSelectProduct(const BaseDeDatos&) const;
+    std::list<Registro> procesarSelectSelect(const BaseDeDatos&) const;
+    std::list<Registro> procesarSelectBasico(const BaseDeDatos&) const;
 
-    /* Funciones Auxiliares */
+    /* MATCH */
+    std::list<Registro> join(const Tabla&, const Tabla&) const;
+    std::list<Registro> procesarMatchBasico(const BaseDeDatos&) const;
 
-    /* - SELECT */
-    linear_set<Registro> procesarSelectProduct (const BaseDeDatos&) const;
-    linear_set<Registro> procesarSelectSelect (const BaseDeDatos&) const;
-    linear_set<Registro> procesarSelectConClave (const BaseDeDatos&) const;
-    linear_set<Registro> procesarSelectSinClave (const BaseDeDatos&) const;
-    linear_set<Registro> procesarSelectBasico (const BaseDeDatos&) const;
-
-    /* - PRODUCT */
+    /* PRODUCT */
     Registro pCartesiano(const Registro&, const Registro&) const;
 
-    /* - MATCH */
-    linear_set<Registro> procesarJoin(const Tabla&, const Tabla&) const;
-    linear_set<Registro> procesarMatchBasico(const BaseDeDatos&) const;
-
-    void _destruir();
 
     class Parser {
     public:

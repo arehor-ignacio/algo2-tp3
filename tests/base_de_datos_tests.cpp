@@ -2,7 +2,7 @@
 #include "../src/BaseDeDatos.h"
 #include <set>
 std::set<NombreCampo> personsTableFields() {
-    std::set<NombreCampo> fields = std::set<NombreCampo>();
+    std::set<NombreCampo> fields;
 
     fields.insert("Nombre");
     fields.insert("Apellido");
@@ -12,7 +12,7 @@ std::set<NombreCampo> personsTableFields() {
 }
 
 std::set<NombreCampo> countryTableFields() {
-    std::set<NombreCampo> fields = std::set<NombreCampo>();
+    std::set<NombreCampo> fields;
 
     fields.insert("Nombre");
     fields.insert("Cant Personas");
@@ -108,23 +108,23 @@ TEST(BDD_test, insertar_y_borrar_registros) {
     db.agregarRegistro("Personas", regPer2);
     db.agregarRegistro("Paises", regCou1);
 
-    linear_set<Registro> personsRegs, countriesRegs;
+    std::list<Registro> personsRegs, countriesRegs;
 
-    personsRegs.insert(regPer1);
-    personsRegs.insert(regPer2);
+    personsRegs.push_back(regPer1);
+    personsRegs.push_back(regPer2);
 
-    countriesRegs.insert(regCou1);
+    countriesRegs.push_back(regCou1);
 
     EXPECT_EQ(db.obtenerTabla("Personas").registros(), personsRegs);
     EXPECT_EQ(db.obtenerTabla("Paises").registros(), countriesRegs);
 
     db.borrarRegistro("Personas", regPer1["DNI"]);
-    personsRegs.erase(regPer1);
+    personsRegs.remove(regPer1);
 
     EXPECT_EQ(db.obtenerTabla("Personas").registros(), personsRegs);
 
     db.borrarRegistro("Paises", regCou1["Nombre"]);
-    countriesRegs.erase(regCou1);
+    countriesRegs.remove(regCou1);
 
     EXPECT_EQ(db.obtenerTabla("Paises").registros(), countriesRegs);
 }
